@@ -1,0 +1,30 @@
+1. What I have done / not done since last Scrum
+2. What I plan to do from this scrum to the next
+3. Where do I need assistance? What do I need to figure out?
+------------------------------------------------------------------------------------
+<<Daily Scrum - 2021-01-14 >>
+--Tyler--
+1. What I have done / not done since last Scrum
+-N/A
+
+2. What I plan to do from this scrum to the next
+-add TODO to story cards in trello
+-research Material UI
+-research search library options
+-Take a look at hosting options
+
+3. Where do I need assistance? What do I need to figure out?
+N/A
+
+--Ileana--
+1. What I have done / not done since last Scrum
+-N/A
+
+2. What I plan to do from this scrum to the next
+-add TODO to story cards in trello
+-research firebase options. See what is possible.
+-research 3rd party login with Facebook/Google
+-Look at react/nodejs deployment on Heroku
+
+3. Where do I need assistance? What do I need to figure out?
+N/A
