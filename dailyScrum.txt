@@ -10,7 +10,13 @@
 2. What I plan to do from this scrum to the next
 -add TODO to story cards in trello
 -research Material UI
+    -has ratings component
+    -has card/grid component
+    -beefed up version of bootstrap
+    -bootstrap can still be used for supplemental styling
 -research search library options
+    -all the good ones that have intelligent search options are not free (ex. https://search-ui-stable.netlify.app/?q=california&size=n_20_n)
+    -if firebase isn't an option, we should fall back on your idea of having radio  buttons to define the search type. 
 -Take a look at hosting options
 
 3. Where do I need assistance? What do I need to figure out?
