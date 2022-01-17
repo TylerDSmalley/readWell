@@ -41,6 +41,40 @@ router.get("/auth", validateToken, (req, res) => {
     res.json(req.user);
 });
 
+router.put("/changepassword", validateToken, async (req, res) => {
+    const { oldPassword, newPassword } = req.body;
+    const user = await Users.findOne({ where: { email: req.user.email } });
+
+    bcrypt.compare(oldPassword, user.password).then(async (match) => {
+        if (!match) res.json({ error: "Wrong Password Entered!" });
+
+        bcrypt.hash(newPassword, 10).then((hash) => {
+            Users.update(
+                { password: hash },
+                { where: { email: req.user.email } }
+            );
+            res.json("SUCCESS");
+        });
+    });
+});
+
+router.put("/userupdate", async (req, res) => {
+    await Users.update({firstName: req.body.firstName, lastName: req.body.lastName, email: req.body.email}, { where: {id : req.body.id} });
+    res.json(req.body);
+});
+
+router.delete("/:userId", validateToken, async (req, res) => {
+    const userId = req.params.userId;
+
+    await Users.destroy({
+        where: {
+            id: userId,
+        },
+    });
+    res.json("USER DELETED");
+});
+
+//ROUTER FOR PROFILE PAGE/FRIEND SEARCH
 // router.get("/basicinfo/:id", async (req, res) => {
 //     const id = req.params.id;
 
@@ -51,21 +85,5 @@ router.get("/auth", validateToken, (req, res) => {
 //     res.json(basicInfo);
 // });
 
-// router.put("/changepassword", validateToken, async (req, res) => {
-//     const { oldPassword, newPassword } = req.body;
-//     const user = await Users.findOne({ where: { email: req.user.email } });
-
-//     bcrypt.compare(oldPassword, user.password).then(async (match) => {
-//         if (!match) res.json({ error: "Wrong Password Entered!" });
-
-//         bcrypt.hash(newPassword, 10).then((hash) => {
-//             Users.update(
-//                 { password: hash },
-//                 { where: { email: req.user.email } }
-//             );
-//             res.json("SUCCESS");
-//         });
-//     });
-// });
 
 module.exports = router;
