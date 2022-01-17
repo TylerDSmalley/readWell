@@ -39,7 +39,6 @@ function Registration() {
                     <label>First Name: </label>
                     <ErrorMessage name="firstName" component="span" />
                     <Field
-                        id="inputCreatePost"
                         name="firstName"
                         placeholder="(Ex. Jane...)"
                     />
@@ -47,7 +46,6 @@ function Registration() {
                     <label>Last Name: </label>
                     <ErrorMessage name="lastName" component="span" />
                     <Field
-                        id="inputCreatePost"
                         name="lastName"
                         placeholder="(Ex. Doe...)"
                     />
@@ -55,7 +53,6 @@ function Registration() {
                     <label>email: </label>
                     <ErrorMessage name="email" component="span" />
                     <Field
-                        id="inputCreatePost"
                         name="email"
                         placeholder="(Ex. John123...)"
                     />
@@ -64,7 +61,6 @@ function Registration() {
                     <ErrorMessage name="password" component="span" />
                     <Field
                         type="password"
-                        id="inputCreatePost"
                         name="password"
                         placeholder="(Ex. password...)"
                     />
@@ -73,7 +69,6 @@ function Registration() {
                     <ErrorMessage name="passwordConfirmation" component="span" />
                     <Field
                         type="password"
-                        id="inputCreatePost"
                         name="passwordConfirmation"
                         placeholder="(Ex. password...)"
                     />
