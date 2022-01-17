@@ -3,20 +3,36 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <AuthContext.Provider value={{ authState, setAuthState }}>
+        <Router>
+          <div className="navbar">
+            <div className="links">
+              {!authState.status ? (
+                <>
+                  <Link to="/login"> Login</Link>
+                  <Link to="/registration"> Registration</Link>
+                </>
+              ) : (
+                <>
+                  <Link to="/"> Home Page</Link>
+                </>
+              )}
+            </div>
+            <div className="loggedInContainer">
+              <h1>{authState.username} </h1>
+              {authState.status && <button onClick={logout}> Logout</button>}
+            </div>
+          </div>
+          <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path='/book/:id' element={<Post />} />
+            <Route path='/registration' element={<Registration />} />
+            <Route path='/login' element={<Login />} />
+            <Route path="/profile/:id" element={<Profile />} />
+            <Route path='/*' element={<PageNotFound />} />
+          </Routes>
+        </Router>
+      </AuthContext.Provider>
     </div>
   );
 }
