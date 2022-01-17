@@ -1,23 +1,23 @@
 module.exports = (sequelize, DataTypes) => {
     const Users = sequelize.define("Users", {
         firstName: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(30),
             allowNull: false,
         },
         lastName: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(30),
             allowNull: false,
         },
         email: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(360),
             allowNull: false,
         },
         password: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(100),
             allowNull: false,
         },
         role: {
-            type: DataTypes.ENUM('user','manager'),
+            type: DataTypes.ENUM('user','admin'),
             allowNull: false,
             defaultValue: 'user',
         }

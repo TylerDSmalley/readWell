@@ -85,6 +85,7 @@ N/A
 
 2. What I plan to do from this scrum to the next
     - implement third party login into existing log in structure
+    - look at implementing amazon S3 for file storage
 
 3. Where do I need assistance? What do I need to figure out?
 N/A
