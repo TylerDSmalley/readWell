@@ -66,3 +66,25 @@ N/A
 
 3. Where do I need assistance? What do I need to figure out?
 N/A
+
+------------------------------------------------------------------------------------
+<<Daily Scrum - 2021-01-17 >>
+--Tyler--
+1. What I have done / not done since last Scrum
+    -ran some firebase tutorials - decided not to move foreward - not enough time. 
+
+2. What I plan to do from this scrum to the next
+    - implement user registration
+
+3. Where do I need assistance? What do I need to figure out?
+N/A
+
+--Ileana--
+1. What I have done / not done since last Scrum
+    -ran some firebase tutorials - decided not to move foreward - not enough time.  
+
+2. What I plan to do from this scrum to the next
+    - implement third party login into existing log in structure
+
+3. Where do I need assistance? What do I need to figure out?
+N/A
