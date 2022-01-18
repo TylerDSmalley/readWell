@@ -20,13 +20,32 @@ import { GoogleLogin } from "react-google-login";
 function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [state, setState] = useState({});
     const { setAuthState } = useContext(AuthContext)
     let navigate = useNavigate();
     const clientId = "413254531245-7ol21fbdp7k43o4pbdm8k0k3ip2bee07.apps.googleusercontent.com";
 
-    const onSuccess = (res) => {
-        console.log('[Login Success] Current User: ', res.profileObj);
+/////////////////////////////////////////////////////////
+    const onSuccess = async (res) => {
+        // Check if a token was recieved and send it to our API:
+        if (response.tokenId) {
+          const onSuccess = await axios.post(
+            "http://localhost:3001/auth/google",
+            { token: res.tokenId }
+          );
+          // Check if we have some result:
+          if (Object.keys(onSuccess.data.payload).length !== 0) {
+           
+            const { name, email, given_name, family_name } = onSuccess.data.payload;
+            setState({...state,given_name,email,family_name
+            });
+        }
     }
+  };
+
+    //const onSuccess = (res) => {
+    //    console.log('[Login Success] Current User: ', res.profileObj);
+   // }
 
     const onFailure = (res) => {
         console.log('[Login Failed] res: ', res);
