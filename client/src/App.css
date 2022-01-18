@@ -3,7 +3,7 @@
 }
 
 body{
-  background-image: linear-gradient(90deg, lightgray, darkgray);
+  background-image: linear-gradient(90deg, lightgray, rgb(252, 250, 250));
 }
 
 .App {
