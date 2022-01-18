@@ -20,7 +20,6 @@ import { GoogleLogin } from "react-google-login";
 function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [state, setState] = useState({});
     const { setAuthState } = useContext(AuthContext)
     let navigate = useNavigate();
     const clientId = "413254531245-7ol21fbdp7k43o4pbdm8k0k3ip2bee07.apps.googleusercontent.com";
