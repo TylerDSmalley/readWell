@@ -12,7 +12,7 @@ import axios from 'axios';
 
 function App() {
   const [authState, setAuthState] = useState({
-    username: "",
+    email: "",
     id: 0,
     status: false,
   });
@@ -29,7 +29,7 @@ function App() {
           setAuthState({ ...authState, status: false });
         } else {
           setAuthState({
-            username: response.data.username,
+            email: response.data.email,
             id: response.data.id,
             status: true,
           });
@@ -39,7 +39,7 @@ function App() {
 
   const logout = () => {
     localStorage.removeItem("accessToken");
-    setAuthState({ username: "", id: 0, status: false });
+    setAuthState({ email: "", id: 0, status: false });
   };
 
   return (
@@ -60,7 +60,7 @@ function App() {
               )}
             </div>
             <div className="loggedInContainer">
-              <h1>{authState.username} </h1>
+              <h1>{authState.email} </h1>
               {authState.status && <button onClick={logout}> Logout</button>}
             </div>
           </div>
