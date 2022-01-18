@@ -89,3 +89,33 @@ N/A
 
 3. Where do I need assistance? What do I need to figure out?
 N/A
+
+------------------------------------------------------------------------------------
+<<Daily Scrum - 2021-01-18 >>
+--Tyler--
+1. What I have done / not done since last Scrum
+    -implemented registration routes in user api
+    -implemented registration form/page on client side
+    -implemented log in logic and authentication helpers to handle log in
+    -implemented log in form/page on client side
+    -added material ui componentes to front end pages
+
+2. What I plan to do from this scrum to the next
+    - establish books, reviews, ratings, user_friends models
+    - establish book library route/ api/ page
+    - add admin crud routes to user, books, reviews
+
+3. Where do I need assistance? What do I need to figure out?
+N/A
+
+--Ileana--
+1. What I have done / not done since last Scrum
+    - implemented third party login into existing log in structure
+    - looked at implementing amazon S3 for file storage 
+
+2. What I plan to do from this scrum to the next
+    - start implementing admin CRUD functionality
+    - start populating DB with data. 
+
+3. Where do I need assistance? What do I need to figure out?
+N/A
