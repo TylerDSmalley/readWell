@@ -15,12 +15,22 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { GoogleLogin } from "react-google-login";
 
 function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const { setAuthState } = useContext(AuthContext)
     let navigate = useNavigate();
+    const clientId = "413254531245-7ol21fbdp7k43o4pbdm8k0k3ip2bee07.apps.googleusercontent.com";
+
+    const onSuccess = (res) => {
+        console.log('[Login Success] Current User: ', res.profileObj);
+    }
+
+    const onFailure = (res) => {
+        console.log('[Login Failed] res: ', res);
+    }
 
     const login = () => {
         const data = { email: email, password: password };
@@ -34,6 +44,8 @@ function Login() {
             };
         });
     };
+
+
 
     function Copyright(props) {
         return (
@@ -110,6 +122,15 @@ function Login() {
                             >
                                 Sign In
                             </Button>
+
+                            <GoogleLogin
+                                clientId={clientId}
+                                buttonText="Log in with Google"
+                                onSuccess={onSuccess}
+                                onFailure={onFailure}
+                                cookiePolicy={'single_host_origin'}
+                            />
+
                             <Grid container>
                                 <Grid item xs>
                                     <Link href="#" variant="body2">
@@ -117,7 +138,7 @@ function Login() {
                                     </Link>
                                 </Grid>
                                 <Grid item>
-                                    <Link href="#" variant="body2">
+                                    <Link href="/registration" variant="body2">
                                         {"Don't have an account? Sign Up"}
                                     </Link>
                                 </Grid>
