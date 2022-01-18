@@ -9,13 +9,14 @@ const client = new OAuth2Client("413254531245-7ol21fbdp7k43o4pbdm8k0k3ip2bee07.a
 
 router.post("/", async (req, res) => {
     console.log(req.body);
-    const { firstName, lastName, email, password } = req.body;
+    const { firstName, lastName, email, password, isLocal } = req.body;
     bcrypt.hash(password, 10).then((hash) => {
         Users.create({
             firstName: firstName,
             lastName: lastName,
             email: email,
             password: hash,
+            isLocal: isLocal,
         });
         res.json("USER CREATED");
     });
@@ -33,6 +34,7 @@ router.post("/login", async (req, res) => {
                 lastName: req.body.lastName,
                 email: req.body.email,
                 password: "",
+                isLocal: "no",
             })
         } else {
             const currUser = await Users.update({ firstName: req.body.firstName, lastName: req.body.lastName }, { where: { email: email } })

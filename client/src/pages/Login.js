@@ -34,6 +34,7 @@ function Login() {
             data.lastName = res.profileObj.familyName
             data.email = res.profileObj.email
             data.password = res.profileObj.googleId
+            data.isLocal = "no"
             // Check if we have some result:
             await axios.post("http://localhost:3001/auth/login", data).then((response) => {
             if (response.data.error) {

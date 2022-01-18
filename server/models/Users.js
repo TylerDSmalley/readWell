@@ -20,6 +20,16 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.ENUM('user','admin'),
             allowNull: false,
             defaultValue: 'user',
+        },
+        isLocal: {
+            type: DataTypes.ENUM('yes','no'),
+            allowNull: false,
+            defaultValue: 'yes',
+        },
+        status: {
+            type: DataTypes.ENUM('active','inactive'),
+            allowNull: false,
+            defaultValue: 'active',
         }
     });
 
