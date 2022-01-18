@@ -25,34 +25,38 @@ function Login() {
     let navigate = useNavigate();
     const clientId = "413254531245-7ol21fbdp7k43o4pbdm8k0k3ip2bee07.apps.googleusercontent.com";
 
-/////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////
     const onSuccess = async (res) => {
         // Check if a token was recieved and send it to our API:
-        if (response.tokenId) {
-          const onSuccess = await axios.post(
-            "http://localhost:3001/auth/google",
-            { token: res.tokenId }
-          );
-          // Check if we have some result:
-          if (Object.keys(onSuccess.data.payload).length !== 0) {
-           
-            const { name, email, given_name, family_name } = onSuccess.data.payload;
-            setState({...state,given_name,email,family_name
-            });
+        if (res.tokenId) {
+            let data = {};
+            data.firstName = res.profileObj.givenName
+            data.lastName = res.profileObj.familyName
+            data.email = res.profileObj.email
+            data.password = res.profileObj.googleId
+            // Check if we have some result:
+            await axios.post("http://localhost:3001/auth/login", data).then((response) => {
+            if (response.data.error) {
+                alert(response.data.error);
+            } else {
+                localStorage.setItem("accessToken", response.data.token);
+                setAuthState({ email: response.data.email, id: response.data.id, status: true });
+                navigate("/");
+            };
+        });
         }
-    }
-  };
+    };
 
     //const onSuccess = (res) => {
     //    console.log('[Login Success] Current User: ', res.profileObj);
-   // }
+    // }
 
     const onFailure = (res) => {
         console.log('[Login Failed] res: ', res);
     }
 
     const login = () => {
-        const data = { email: email, password: password };
+        let data = { email: email, password: password };
         axios.post("http://localhost:3001/auth/login", data).then((response) => {
             if (response.data.error) {
                 alert(response.data.error);
@@ -69,7 +73,7 @@ function Login() {
     function Copyright(props) {
         return (
             <Typography variant="body2" color="text.secondary" align="center" {...props}>
-                {'Copyright © '}
+                {'Copyright Â© '}
                 <Link color="inherit" href="#">
                     Team IT
                 </Link>{' '}
@@ -100,7 +104,7 @@ function Login() {
                         <Typography component="h1" variant="h5">
                             Sign in
                         </Typography>
-                        <Box component="form" onSubmit={login} noValidate sx={{ mt: 1 }}>
+                        <Box noValidate sx={{ mt: 1 }}>
                             <TextField
                                 className="bg-light"
                                 margin="normal"
@@ -134,7 +138,7 @@ function Login() {
                                 label="Remember me"
                             />
                             <Button
-                                type="submit"
+                                onClick={login}
                                 fullWidth
                                 variant="contained"
                                 sx={{ mt: 3, mb: 2 }}

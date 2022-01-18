@@ -52,15 +52,21 @@ function Registration() {
         passwordConfirmation: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match')
     });
 
-    const onSubmit = (event) => {
-        event.preventDefault();
-        const form = new FormData(event.currentTarget);
-        let data = {
-            firstName: form.get('firstName'),
-            lastName: form.get('lastName'),
-            email: form.get('email'),
-            password: form.get('password'),
-        };
+    // const onSubmit = (event) => {
+    //     const form = new FormData(event.currentTarget);
+    //     let data = {
+    //         firstName: form.get('firstName'),
+    //         lastName: form.get('lastName'),
+    //         email: form.get('email'),
+    //         password: form.get('password'),
+    //     };
+
+    //     axios.post("http://localhost:3001/auth", data).then((response) => {
+    //         navigate("/");
+    //     });
+    // };
+    
+    const onSubmit = (data) => {
         axios.post("http://localhost:3001/auth", data).then((response) => {
             navigate("/");
         });
