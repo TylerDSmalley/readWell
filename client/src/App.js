@@ -1,7 +1,7 @@
 import './App.css';
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
-//import Home from './pages/Home';
+import Home from './pages/Home';
 import Registration from "./pages/Registration";
 import Login from "./pages/Login";
 import PageNotFound from "./pages/PageNotFound";
@@ -55,7 +55,7 @@ function App() {
                 </>
               ) : (
                 <>
-                  {/* {<Link to="/"> Home Page</Link>} */}
+                  <Link to="/"> Home Page</Link>
                 </>
               )}
             </div>
@@ -67,8 +67,8 @@ function App() {
           <Routes>
             <Route path='/registration' element={<Registration />} />
             <Route path='/login' element={<Login />} />
-            {/*
             <Route path='/' element={<Home />} /> 
+            {/*
             <Route path='/book/:id' element={<Post />} />
             
             <Route path="/profile/:id" element={<Profile />} />
