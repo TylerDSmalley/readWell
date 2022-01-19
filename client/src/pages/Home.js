@@ -1,7 +1,5 @@
 import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
-import MenuBookIcon from '@mui/icons-material/MenuBook';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -10,30 +8,15 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from "axios";
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
 
 function Home() {
-    function Copyright() {
-        return (
-            <Typography variant="body2" color="text.secondary" align="center">
-                {'Copyright © '}
-                <Link color="inherit" href="#">
-                    Team IT
-                </Link>{' '}
-                {new Date().getFullYear()}
-                {'.'}
-            </Typography>
-        );
-    }
 
-    const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     const theme = createTheme();
 
     const [listOfBooks, setListOfBooks] = useState([]);
@@ -52,15 +35,7 @@ function Home() {
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
-            <AppBar position="relative">
-                <Toolbar>
-                    <MenuBookIcon sx={{ mr: 2 }} />
-                    <Typography variant="h6" color="inherit" noWrap>
-                        Library layout
-                    </Typography>
-                </Toolbar>
-            </AppBar>
-            <main>
+            <main className="w-100">
                 {/* Hero unit */}
                 <Box
                     sx={{
@@ -120,7 +95,13 @@ function Home() {
                                         </Typography>
                                     </CardContent>
                                     <CardActions>
-                                        <Button size="small">View details</Button>
+                                        <Button size="small"
+                                            onClick={
+                                                () => {
+                                                    navigate(`/books/byId/${value.id}`)
+                                                }
+                                            }
+                                        >View details</Button>
                                         <Button size="small">Add to Bookshelf</Button>
                                     </CardActions>
                                 </Card>
@@ -129,22 +110,6 @@ function Home() {
                     </Grid>
                 </Container>
             </main>
-            {/* Footer */}
-            <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer" className='w-100'>
-                <Typography variant="h6" align="center" gutterBottom>
-                    Footer
-                </Typography>
-                <Typography
-                    variant="subtitle1"
-                    align="center"
-                    color="text.secondary"
-                    component="p"
-                >
-                    Something here to give the footer a purpose!
-                </Typography>
-                <Copyright />
-            </Box>
-            {/* End footer */}
         </ThemeProvider>
     );
 }

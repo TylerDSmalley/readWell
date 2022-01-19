@@ -1,5 +1,14 @@
 import './App.css';
 import React from 'react';
+//Material UI imports
+import AppBar from '@mui/material/AppBar';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import CssBaseline from '@mui/material/CssBaseline';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+//--
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import Home from './pages/Home';
 import Registration from "./pages/Registration";
@@ -8,18 +17,31 @@ import PageNotFound from "./pages/PageNotFound";
 import UserList from './pages/admin/UserList';
 import BookList from './pages/admin/BookList';
 import ReviewList from './pages/ReviewList';
+import Book from './pages/Book';
 import { AuthContext } from "./helpers/AuthContext";
 import { useState, useEffect } from "react";
 import axios from 'axios';
 
 
 function App() {
+  const theme = createTheme();
   const [authState, setAuthState] = useState({
     email: "",
     id: 0,
     role: "",
     status: false,
   });
+
+  function Copyright() {
+    return (
+      <Typography variant="body2" color="text.secondary" align="center">
+        {'Copyright © '}
+        Team IT
+        {new Date().getFullYear()}
+        {'.'}
+      </Typography>
+    );
+  }
 
   useEffect((authState) => {
     axios
@@ -51,6 +73,20 @@ function App() {
     <div className="App">
       <AuthContext.Provider value={{ authState, setAuthState }}>
         <Router>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <AppBar position="relative">
+              <Toolbar>
+                <MenuBookIcon sx={{ mr: 2 }} />
+                <Typography variant="h6" color="inherit" noWrap>
+                <Link to="/" className='m-0'> ReadWell</Link>
+                </Typography>
+                <Typography variant="h5" color="inherit" align="right" noWrap style={{ flex: 1 }}>
+                  {authState.email} 
+                </Typography>
+              </Toolbar>
+            </AppBar>
+          </ThemeProvider>
           <div className="navbar">
             <div className="links">
               {!authState.status ? (
@@ -60,25 +96,25 @@ function App() {
                 </>
               ) : (
                 <>
-                  <Link to="/"> Home Page</Link>
+                  
                 </>
               )}
-              {authState.role === "admin" && 
-              <>
-                <Link to="/admin/users/list"> User List</Link>
-                <Link to="/admin/books/list"> Book List</Link>
-              </>
+              {authState.role === "admin" &&
+                <>
+                  <Link to="/admin/users/list"> User List</Link>
+                  <Link to="/admin/books/list"> Book List</Link>
+                </>
               }
             </div>
             <div className="loggedInContainer">
-              <h5>{authState.email} </h5>
               {authState.status && <button onClick={logout}> Logout</button>}
             </div>
           </div>
           <Routes>
             <Route path='/registration' element={<Registration />} />
             <Route path='/login' element={<Login />} />
-            <Route path='/' element={<Home />} /> 
+            <Route path='/' element={<Home />} />
+            <Route path='/books/byId/:id' element={<Book />} />
             <Route path='/admin/users/list' element={<UserList />} />
             <Route path='admin/books/list' element={<BookList />} />
             <Route path='admin/reviews/list' element={<ReviewList />} />
@@ -86,6 +122,20 @@ function App() {
           </Routes>
         </Router>
       </AuthContext.Provider>
+      <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer" className='w-100'>
+        <Typography variant="h6" align="center" gutterBottom>
+          Footer
+        </Typography>
+        <Typography
+          variant="subtitle1"
+          align="center"
+          color="text.secondary"
+          component="p"
+        >
+          Something here to give the footer a purpose!
+        </Typography>
+        <Copyright />
+      </Box>
     </div>
   );
 }
