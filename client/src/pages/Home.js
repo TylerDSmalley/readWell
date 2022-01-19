@@ -15,25 +15,40 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import axios from "axios";
+import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom";
 
-function Copyright() {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center">
-            {'Copyright © '}
-            <Link color="inherit" href="#">
-                Team IT
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
+function Home() {
+    function Copyright() {
+        return (
+            <Typography variant="body2" color="text.secondary" align="center">
+                {'Copyright © '}
+                <Link color="inherit" href="#">
+                    Team IT
+                </Link>{' '}
+                {new Date().getFullYear()}
+                {'.'}
+            </Typography>
+        );
+    }
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    const theme = createTheme();
 
-const theme = createTheme();
+    const [listOfBooks, setListOfBooks] = useState([]);
+    let navigate = useNavigate();
 
-export default function Album() {
+    useEffect(() => {
+        axios.get(
+            "http://localhost:3001/books",
+        ).then((response) => {
+            setListOfBooks(response.data);
+            console.log(response.data)
+        });
+    }, []);
+
+
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
@@ -75,15 +90,15 @@ export default function Album() {
                             spacing={2}
                             justifyContent="center"
                         >
-                            
+
                         </Stack>
                     </Container>
                 </Box>
                 <Container sx={{ py: 8 }} maxWidth="md">
                     {/* End hero unit */}
                     <Grid container spacing={4}>
-                        {cards.map((card) => (
-                            <Grid item key={card} xs={12} sm={6} md={4}>
+                        {listOfBooks.map((value, key) => (
+                            <Grid item key={key} xs={12} sm={6} md={4}>
                                 <Card
                                     sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
                                 >
@@ -98,11 +113,10 @@ export default function Album() {
                                     />
                                     <CardContent sx={{ flexGrow: 1 }}>
                                         <Typography gutterBottom variant="h5" component="h2">
-                                            Heading
+                                            {value.title}
                                         </Typography>
                                         <Typography>
-                                            This is a Book card. You can use this section to describe the
-                                            content.
+                                            {value.summary}
                                         </Typography>
                                     </CardContent>
                                     <CardActions>
@@ -134,3 +148,5 @@ export default function Album() {
         </ThemeProvider>
     );
 }
+
+export default Home
