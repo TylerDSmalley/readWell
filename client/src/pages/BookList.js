@@ -19,7 +19,7 @@ function BookList(){
             <h5>List of Books</h5>
             {listOfBooks.map((value,key)=>{
         return (
-        <div className="card m-2">
+        <div key={key} className="card m-2">
         <img src={value.coverPhoto} alt="Book Cover" width="150" height="250"></img>
           <div className="card-body">
           <p className="card-title"><b>Title:</b>&nbsp;{value.title}</p>
