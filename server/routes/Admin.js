@@ -39,7 +39,7 @@ router.get("/users/list", async (req, res) => {
 router.put("/users/delete/:bookId", async (req, res) => {
     await Users.update({
         status: "inactive",
-    }, { where: {id : req.body.id} });
+    }, { where: {id : req.params.bookId} });
     res.json(req.body);
 });
 
