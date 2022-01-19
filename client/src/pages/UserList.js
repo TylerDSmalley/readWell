@@ -19,7 +19,7 @@ function UserList() {
       <h5>List of Users</h5>
       {listOfUsers.map((value, key) => {
         return (
-        <div className="card m-2">
+        <div key={key} className="card m-2">
           <div className="card-body">
           <p className="card-title"><b>Full Name:</b>&nbsp;{value.firstName}&nbsp;{value.lastName}</p>
           <p className="card-text"><b>Email:</b>&nbsp;{value.email}</p>
