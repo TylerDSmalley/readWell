@@ -29,6 +29,12 @@ router.get("/", async (req, res) => {
     res.json(listOfBooks);
 });
 
+router.get("/byId/:id", async (req, res) => {
+    const id = req.params.id;
+    const book = await Books.findByPk(id);
+    res.json(book);
+});
+
 //update book by id
 router.put("/update/:bookId", async (req, res) => {
     await Books.update({
