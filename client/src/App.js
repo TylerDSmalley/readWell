@@ -16,6 +16,7 @@ function App() {
   const [authState, setAuthState] = useState({
     email: "",
     id: 0,
+    role: "",
     status: false,
   });
 
@@ -33,6 +34,7 @@ function App() {
           setAuthState({
             email: response.data.email,
             id: response.data.id,
+            role: response.data.role,
             status: true,
           });
         }
@@ -41,7 +43,7 @@ function App() {
 
   const logout = () => {
     localStorage.removeItem("accessToken");
-    setAuthState({ email: "", id: 0, status: false });
+    setAuthState({ email: "", id: 0, role: "", status: false });
   };
 
   return (
@@ -60,9 +62,15 @@ function App() {
                   <Link to="/"> Home Page</Link>
                 </>
               )}
+              {authState.role === "admin" && 
+              <>
+                <Link to="/admin/users/list"> User List</Link>
+                <Link to="/admin/books/list"> Book List</Link>
+              </>
+              }
             </div>
             <div className="loggedInContainer">
-              <h1>{authState.email} </h1>
+              <h5>{authState.email} </h5>
               {authState.status && <button onClick={logout}> Logout</button>}
             </div>
           </div>
