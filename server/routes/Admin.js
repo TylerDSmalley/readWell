@@ -46,7 +46,8 @@ router.put("/users/delete/:bookId", async (req, res) => {
 //BOOKS--------------------------------------
 
 //create book
-router.post("/books/create", validateToken, async (req, res) => {
+router.post("/books/create", async (req, res) => {
+//router.post("/books/create", validateToken, async (req, res) => {
     console.log(req.body);
     const { title, author, summary, genre, datePublished, publisher, isbn, coverPhoto } = req.body;
     await Books.create({
