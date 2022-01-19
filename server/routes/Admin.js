@@ -103,4 +103,15 @@ router.get("/reviews/list", async (req, res) => {
     res.json(listOfReviews);
 });
 
+//delete book review
+router.delete("reviews/delete/:reviewId", validateToken, async (req, res) => {
+    const reviewId = req.params.reviewId;
+    await Reviews.destroy({
+        where: {
+            id: reviewId,
+        },
+    });
+    res.json("REVIEW DELETED");
+})
+
 module.exports = router;
