@@ -98,7 +98,7 @@ router.delete("books/delete/:bookId", validateToken, async (req, res) => {
 //REVIEWS------------------------------------
 
 //get all book reviews
-router.get("/", async (req, res) => {
+router.get("/reviews/list", async (req, res) => {
     const listOfReviews = await Reviews.findAll();
     res.json(listOfReviews);
 });
