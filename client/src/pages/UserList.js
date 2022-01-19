@@ -27,7 +27,7 @@ function UserList(){
           <p className="cart-text"><b>isLocal:</b>&nbsp;{value.isLocal}</p>
           <p className="cart-text"><b>Account Status:</b>&nbsp;{value.status}</p>
           <button type="button" className="btn btn-primary" onClick={()=>{navigate(`/admin/list`)}}>Edit</button>
-          <button type="button" className="btn btn-primary" onClick={()=>{navigate(`/admin/delete/${value.id}`)}}>Delete</button>
+          <button type="button" className="btn btn-primary" onClick={()=>{navigate(`/admin/users/delete/${value.id}`)}}>Delete</button>
           </div>
           </div>
         );

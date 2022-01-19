@@ -6,6 +6,7 @@ import Registration from "./pages/Registration";
 import Login from "./pages/Login";
 import PageNotFound from "./pages/PageNotFound";
 import UserList from './pages/UserList';
+import BookList from './pages/BookList';
 import { AuthContext } from "./helpers/AuthContext";
 import { useState, useEffect } from "react";
 import axios from 'axios';
@@ -69,10 +70,8 @@ function App() {
             <Route path='/registration' element={<Registration />} />
             <Route path='/login' element={<Login />} />
             <Route path='/' element={<Home />} /> 
-            <Route path='/admin/list' element={<UserList />} />
-            {/*
-            <Route path="/profile/:id" element={<Profile />} />
-            */}
+            <Route path='/admin/users/list' element={<UserList />} />
+            <Route path='admin/books/list' element={<BookList />} />
             <Route path='/*' element={<PageNotFound />} />
           </Routes>
         </Router>
