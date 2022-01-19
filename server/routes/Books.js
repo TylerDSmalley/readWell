@@ -24,9 +24,9 @@ router.post("/", validateToken, async (req, res) => {
 });
 
 //get all books
-router.get("/", validateToken, async (req, res) => {
-    const listOfBooks = await Posts.findAll({ include: [Reviews, Bookshelves] });
-    res.json({ listOfBooks: listOfBooks });
+router.get("/", async (req, res) => {
+    const listOfBooks = await Books.findAll();
+    res.json(listOfBooks);
 });
 
 //update book by id
