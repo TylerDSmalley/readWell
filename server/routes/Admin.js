@@ -36,10 +36,10 @@ router.get("/users/list", async (req, res) => {
 });
 
 //"delete" user by id
-router.put("/users/delete/:bookId", async (req, res) => {
+router.put("/users/delete/:userId", async (req, res) => {
     await Users.update({
         status: "inactive",
-    }, { where: {id : req.params.bookId} });
+    }, { where: {id : req.params.userId} });
     res.json(req.body);
 });
 
