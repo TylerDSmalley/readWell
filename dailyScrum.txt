@@ -101,9 +101,9 @@ N/A
     -added material ui componentes to front end pages
 
 2. What I plan to do from this scrum to the next
-    - establish books, reviews, ratings, user_friends models
-    - establish book library route/ api/ page
-    - add admin crud routes to user, books, reviews
+    - DONE establish books, reviews, ratings, user_friends models
+    - DONE establish book library route/ api/ page
+    - DONE add admin crud routes to user, books, reviews
 
 3. Where do I need assistance? What do I need to figure out?
 N/A
@@ -116,6 +116,41 @@ N/A
 2. What I plan to do from this scrum to the next
     - start implementing admin CRUD functionality
     - start populating DB with data. 
+
+3. Where do I need assistance? What do I need to figure out?
+N/A
+
+------------------------------------------------------------------------------------
+<<Daily Scrum - 2021-01-19 >>
+--Tyler--
+1. What I have done / not done since last Scrum
+    - established all remaining models with relations
+    - established book library route/ api/ page
+    - created admin router with CRUD routes for review, books, and users
+    - add user role to authentication token
+    - added links to admin lists that are only visible to users with admin role
+    - added logic to "home.js" to display books.
+
+2. What I plan to do from this scrum to the next
+    - add individual book info page
+    - implement bookshelves
+    - time permitting: implement review system
+
+3. Where do I need assistance? What do I need to figure out?
+N/A
+
+--Ileana--
+1. What I have done / not done since last Scrum
+    - created admin views for books, users and reviews
+    - started implementing admin CRUD functionality
+    - added books to DB for testing
+    - created admin list pages to display lists
+
+2. What I plan to do from this scrum to the next
+    - add - add functionality to admin lists
+    - look into implementing AWS RDS for DB
+    - look into how to upload images to S3 from admin panel
+    
 
 3. Where do I need assistance? What do I need to figure out?
 N/A
