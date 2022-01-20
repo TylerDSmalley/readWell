@@ -1,5 +1,7 @@
-import * as React from 'react';
+import React, { useEffect, useState, useContext } from "react";
 import Container from '@mui/material/Container';
+import CardMedia from '@mui/material/CardMedia';
+import Rating from '@mui/material/Rating';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Toolbar from '@mui/material/Toolbar';
@@ -29,8 +31,24 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import { height } from '@mui/system';
+import { AuthContext } from "../helpers/AuthContext";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import moment from "moment";
 
 function Bookshelf() {
+    let { id } = useParams();
+    const { authState } = useContext(AuthContext)
+    const [listOfShelves, setListOfShelves] = useState([]);
+    const [personalRating, setPersonalRating] = useState([]);
+
+    useEffect(() => {
+        axios.get(`http://localhost:3001/shelves/${id}`).then((response) => {
+            setListOfShelves(response.data);
+            setPersonalRating(response.data.rating);
+            console.log(response.data)
+        });
+    }, [id]);
 
     const Search = styled('div')(({ theme }) => ({
         position: 'relative',
@@ -74,8 +92,9 @@ function Bookshelf() {
         },
     }));
 
-    function createData(coverPhoto, title, author, rating, personalRating, createdAt) {
+    function createData(id, coverPhoto, title, author, rating, personalRating, createdAt) {
         return {
+            id,
             coverPhoto,
             title,
             author,
@@ -85,20 +104,24 @@ function Bookshelf() {
         };
     }
 
-    const rows = [
-        createData('photo', "Game of Thrones", "George R.R. Martin", 4.7, 4, "2022-01-19"),
-        createData('photo', "Game of Thrones", "George R.R. Martin", 1, 4, "2022-01-19"),
-        createData('photo', "Game of Thrones", "George R.R. Martin", 3, 4, "2022-01-19"),
-        createData('photo', "Game of Thrones", "George R.R. Martin", 4, 4, "2022-01-19"),
-        createData('photo', "Game of Thrones", "George R.R. Martin", 5, 4, "2022-01-19"),
-        createData('photo', "Game of Thrones", "George R.R. Martin", 2, 4, "2022-01-19"),
-        createData('photo', "Game of Thrones", "George R.R. Martin", 3, 4, "2022-01-19"),
-        createData('photo', "Game of Thrones", "George R.R. Martin", 6, 4, "2022-01-19"),
-        createData('photo', "Game of Thrones", "George R.R. Martin", 5, 4, "2022-01-19"),
-        createData('photo', "Game of Thrones", "George R.R. Martin", 3, 4, "2022-01-19"),
-        createData('photo', "Game of Thrones", "George R.R. Martin", 4.7, 4, "2022-01-19"),
-        createData('photo', "Game of Thrones", "George R.R. Martin", 4.7, 4, "2022-01-19"),
-    ];
+    const rows = listOfShelves.map((value) => (
+        createData(value.id ,value.Book.coverPhoto, value.Book.title, value.Book.author, value.Book.rating, value.personalRating, value.createdAt)
+    ))
+
+    // const rows = [
+    //     createData('photo', "Game of Thrones", "George R.R. Martin", 4.7, 4, "2022-01-19"),
+    //     createData('photo', "Game of Thrones", "George R.R. Martin", 1, 4, "2022-01-19"),
+    //     createData('photo', "Game of Thrones", "George R.R. Martin", 3, 4, "2022-01-19"),
+    //     createData('photo', "Game of Thrones", "George R.R. Martin", 4, 4, "2022-01-19"),
+    //     createData('photo', "Game of Thrones", "George R.R. Martin", 5, 4, "2022-01-19"),
+    //     createData('photo', "Game of Thrones", "George R.R. Martin", 2, 4, "2022-01-19"),
+    //     createData('photo', "Game of Thrones", "George R.R. Martin", 3, 4, "2022-01-19"),
+    //     createData('photo', "Game of Thrones", "George R.R. Martin", 6, 4, "2022-01-19"),
+    //     createData('photo', "Game of Thrones", "George R.R. Martin", 5, 4, "2022-01-19"),
+    //     createData('photo', "Game of Thrones", "George R.R. Martin", 3, 4, "2022-01-19"),
+    //     createData('photo', "Game of Thrones", "George R.R. Martin", 4.7, 4, "2022-01-19"),
+    //     createData('photo', "Game of Thrones", "George R.R. Martin", 4.7, 4, "2022-01-19"),
+    // ];
 
     function descendingComparator(a, b, orderBy) {
         if (b[orderBy] < a[orderBy]) {
@@ -117,6 +140,12 @@ function Bookshelf() {
     }
 
     const headCells = [
+        {
+            id: 'id',
+            numeric: false,
+            disablePadding: true,
+            label: 'Id',
+        },
         {
             id: 'cover',
             numeric: false,
@@ -185,7 +214,7 @@ function Bookshelf() {
                     {headCells.map((headCell) => (
                         <TableCell
                             key={headCell.id}
-                            align={headCell.numeric ? 'right' : 'left'}
+                            align='left'
                             padding={headCell.disablePadding ? 'none' : 'normal'}
                             sortDirection={orderBy === headCell.id ? order : false}
                         >
@@ -286,19 +315,19 @@ function Bookshelf() {
 
     const handleSelectAllClick = (event) => {
         if (event.target.checked) {
-            const newSelecteds = rows.map((n) => n.name);
+            const newSelecteds = rows.map((n) => n.id);
             setSelected(newSelecteds);
             return;
         }
         setSelected([]);
     };
 
-    const handleClick = (event, name) => {
-        const selectedIndex = selected.indexOf(name);
+    const handleClick = (event, id) => {
+        const selectedIndex = selected.indexOf(id);
         let newSelected = [];
 
         if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, name);
+            newSelected = newSelected.concat(selected, id);
         } else if (selectedIndex === 0) {
             newSelected = newSelected.concat(selected.slice(1));
         } else if (selectedIndex === selected.length - 1) {
@@ -322,7 +351,7 @@ function Bookshelf() {
         setPage(0);
     };
 
-    const isSelected = (name) => selected.indexOf(name) !== -1;
+    const isSelected = (id) => selected.indexOf(id) !== -1;
 
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
@@ -333,7 +362,7 @@ function Bookshelf() {
     return (
         <main className="w-100">
             <Container sx={{ minHeight: "100vh", maxWidth: '100%' }}>
-                <Box sx={{ display: 'flex', p: 8, my: 5, minWidth: 'fit-content'}}  className='contentBox rounded-3'>
+                <Box sx={{ display: 'flex', p: 8, my: 5, minWidth: 'fit-content' }} className='contentBox rounded-3'>
                     <CssBaseline />
                     <Box flexDirection="column">
                         <Toolbar position="static">
@@ -360,7 +389,7 @@ function Bookshelf() {
                         <Box sx={{ display: 'flex', minHeight: "100vh" }} maxWidth={"100%"}>
                             <List sx={{ pt: 3 }} >
                                 <Typography variant='h6'>Bookshelves</Typography>
-                                {['Read', 'Reading', 'Want to read'].map((text, index) => (
+                                {['Read', 'Reading', 'Want to read'].map((text) => (
                                     <ListItem button key={text}>
                                         <LocalLibraryIcon sx={{ mr: 2 }} />
                                         <ListItemText secondary={text} />
@@ -390,17 +419,17 @@ function Bookshelf() {
                                             <TableBody>
                                                 {rows.slice().sort(getComparator(order, orderBy))
                                                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                                    .map((row, index) => {
-                                                        const isItemSelected = isSelected(row.name);
-                                                        const labelId = `enhanced-table-checkbox-${index}`;
+                                                    .map((row) => {
+                                                        const isItemSelected = isSelected(row.id);
+                                                        const labelId = `enhanced-table-checkbox-${row.id}`;
                                                         return (
                                                             <TableRow
                                                                 hover
-                                                                onClick={(event) => handleClick(event, row.name)}
+                                                                onClick={(event) => handleClick(event, row.id)}
                                                                 role="checkbox"
                                                                 aria-checked={isItemSelected}
                                                                 tabIndex={-1}
-                                                                key={row.name}
+                                                                key={row.title}
                                                                 selected={isItemSelected}
                                                             >
                                                                 <TableCell padding="checkbox">
@@ -412,19 +441,35 @@ function Bookshelf() {
                                                                         }}
                                                                     />
                                                                 </TableCell>
+                                                                <TableCell align="left">{row.id}</TableCell>
                                                                 <TableCell
                                                                     component="th"
                                                                     id={labelId}
                                                                     scope="row"
                                                                     padding="none"
                                                                 >
-                                                                    {row.coverPhoto}
+                                                                    <CardMedia
+                                                                        component="img"
+                                                                        sx={{
+                                                                            // 16:9
+                                                                            py: 2,
+                                                                        }}
+                                                                        image={row.coverPhoto}
+                                                                        alt="random"
+                                                                    />
                                                                 </TableCell>
-                                                                <TableCell align="right">{row.title}</TableCell>
-                                                                <TableCell align="right">{row.author}</TableCell>
-                                                                <TableCell align="right">{row.rating}</TableCell>
-                                                                <TableCell align="right">{row.personalRating}</TableCell>
-                                                                <TableCell align="right">{row.createdAt}</TableCell>
+                                                                <TableCell align="left">{row.title}</TableCell>
+                                                                <TableCell align="left">{row.author}</TableCell>
+                                                                <TableCell align="left">{row.rating}</TableCell>
+                                                                <TableCell align="left">
+                                                                    <Rating 
+                                                                        sx={{ pl: 0, ml: 0 }} 
+                                                                        name="read-only" 
+                                                                        value={row.personalRating} 
+                                                                        readOnly
+                                                                    />
+                                                                </TableCell>
+                                                                <TableCell align="left">{moment(row.createdAt).format('DD/MM/YYYY - HH:MM')}</TableCell>
                                                             </TableRow>
                                                         );
                                                     })}
