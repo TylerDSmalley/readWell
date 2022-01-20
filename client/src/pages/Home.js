@@ -31,7 +31,6 @@ function Home() {
         });
     }, []);
 
-
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
