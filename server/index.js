@@ -15,6 +15,9 @@ app.use("/auth", usersRouter);
 const booksRouter = require("./routes/Books")
 app.use("/books", booksRouter);
 
+const shelvesRouter = require("./routes/Bookshelves")
+app.use("/shelves", shelvesRouter);
+
 const adminRouter = require("./routes/Admin")
 app.use("/admin", adminRouter);
 
