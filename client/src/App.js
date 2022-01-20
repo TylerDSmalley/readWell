@@ -96,7 +96,8 @@ function App() {
                 </>
               ) : (
                 <>
-                <Link to="/bookshelves"> Bookshelves</Link>
+                <Link to={{pathname: `/bookshelves/${authState.id}`}}>
+                Bookshelves</Link>
                 </>
               )}
               {authState.role === "admin" &&
@@ -115,7 +116,7 @@ function App() {
             <Route path='/login' element={<Login />} />
             <Route path='/' element={<Home />} />
             <Route path='/books/byId/:id' element={<Book />} />
-            <Route path='/bookshelves' element={<Bookshelf />} />
+            <Route path='/bookshelves/:id' element={<Bookshelf />} />
             <Route path='/admin/users/list' element={<UserList />} />
             <Route path='admin/books/list' element={<BookList />} />
             <Route path='admin/reviews/list' element={<ReviewList />} />
