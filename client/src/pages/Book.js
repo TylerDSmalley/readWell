@@ -25,7 +25,7 @@ function Book() {
     const theme = createTheme();
     const { authState } = useContext(AuthContext)
     const [bookObject, setBookObject] = useState({});
-    // const [reviews, setReviews] = useState([]);
+    // const [listOfReviews, setListOfReviews] = useState([]);
     // const [newReview, setNewReview] = useState("");
     const [ratingValue, setRatingValue] = useState(0);
     const [popUp, setPopUp] = useState("");
