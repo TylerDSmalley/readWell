@@ -4,6 +4,7 @@ server/node_modules
 client/package-lock
 server/package-lock
 client/.pnp
+server/config
 .pnp.js
 
 # testing
