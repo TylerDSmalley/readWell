@@ -14,8 +14,7 @@ const client = new OAuth2Client("413254531245-7ol21fbdp7k43o4pbdm8k0k3ip2bee07.a
 
 //create user
 router.post("/users/create", async (req, res) => {
-    console.log(req.body);
-    const { firstName, lastName, email, password, role, isLocal } = req.body;
+    const { firstName, lastName, email, password, role } = req.body;
     bcrypt.hash(password, 10).then((hash) => {
         Users.create({
             firstName: firstName,
@@ -23,7 +22,6 @@ router.post("/users/create", async (req, res) => {
             email: email,
             password: hash,
             role: role,
-            isLocal: isLocal,
         });
         res.json("USER CREATED");
     });

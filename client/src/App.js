@@ -104,6 +104,8 @@ function App() {
                 <>
                   <Link to="/admin/users/list"> User List</Link>
                   <Link to="/admin/books/list"> Book List</Link>
+                  <Link to="/admin/books/create">Add Book</Link>
+                  <Link to="/admin/users/create">Create User</Link>
                 </>
               }
             </div>
@@ -120,6 +122,8 @@ function App() {
             <Route path='/admin/users/list' element={<UserList />} />
             <Route path='admin/books/list' element={<BookList />} />
             <Route path='admin/reviews/list' element={<ReviewList />} />
+            <Route path='admin/books/create' element={<AddBook />} />
+            <Route path='admin/users/create' element={<CreateUsers />} />   
             <Route path='/*' element={<PageNotFound />} />
           </Routes>
         </Router>
