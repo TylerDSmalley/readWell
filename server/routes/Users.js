@@ -112,28 +112,6 @@ router.delete("/:userId", validateToken, async (req, res) => {
 //Need to look at what values are available in payload..
 //How do you handle create user if user is not in DB without password
 
-
-// router.post("/auth/google", async (req, res) => {
-//     const { token } = req.body;
-//     const ticket = await client.verifyIdToken({
-//         idToken: token,
-//         audience: "413254531245-7ol21fbdp7k43o4pbdm8k0k3ip2bee07.apps.googleusercontent.com"
-//     });
-//     const { name, email, given_name, family_name } = ticket.getPayload();
-
-//     const foundUser = await Users.findOne({ where: { email: email } });
-
-//     if (!foundUser) {
-//         const newUser = await Users.create({
-//             firstName: given_name,
-//             lastName: family_name,
-//             email: email,
-//         })
-//     } else {
-//         const currUser = await Users.update({ firstName: given_name, lastName: last_name }, { where: { email: email } })
-//     }
-// })
-
 //ROUTER FOR PROFILE PAGE/FRIEND SEARCH
 // router.get("/basicinfo/:id", async (req, res) => {
 //     const id = req.params.id;
