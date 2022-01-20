@@ -76,7 +76,7 @@ function Registration() {
     return (
         <div>
             <ThemeProvider theme={theme}>
-                <Container component="main" maxWidth="xs">
+                <Container sx={{minHeight: "100vh" }} component="main" maxWidth="xs">
                     <CssBaseline />
                     <Box
                         sx={{
