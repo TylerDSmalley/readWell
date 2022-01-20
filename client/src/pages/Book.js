@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, forwardRef } from "react";
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -14,6 +14,10 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../helpers/AuthContext";
 import { useNavigate } from "react-router-dom";
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 
 function Book() {
     let { id } = useParams();
@@ -24,6 +28,99 @@ function Book() {
     // const [reviews, setReviews] = useState([]);
     // const [newReview, setNewReview] = useState("");
     const [ratingValue, setRatingValue] = useState(0);
+    const [popUp, setPopUp] = useState("");
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+    const [snackOpen, setSnackOpen] = useState(false);
+    const Alert = forwardRef(function Alert(props, ref) {
+        return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+    });
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const handleSnackClick = () => {
+        setSnackOpen(true);
+    };
+
+    const handleSnackClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setSnackOpen(false);
+    };
+
+    const addToRead = () => {
+        axios.post(`http://localhost:3001/shelves`, {
+            shelf: "read",
+            BookId: id,
+            UserId: authState.id
+        },
+            {
+                headers: {
+                    accessToken: localStorage.getItem("accessToken")
+                },
+            }
+        ).then((response) => {
+            if (response.data.error) {
+                setPopUp(response.data.error);
+            } else {
+                setPopUp("Book added to Read shelf!");
+                handleSnackClick();
+                setAnchorEl(null);
+            }
+        });
+    };
+
+    const addToReading = () => {
+        axios.post(`http://localhost:3001/shelves`, {
+            shelf: "reading",
+            BookId: id,
+            UserId: authState.id
+        },
+            {
+                headers: {
+                    accessToken: localStorage.getItem("accessToken")
+                },
+            }
+        ).then((response) => {
+            if (response.data.error) {
+                setPopUp(response.data.error);
+            } else {
+                setPopUp("Book added to Reading shelf!");
+                handleSnackClick();
+                setAnchorEl(null);
+            }
+        });
+    };
+
+    const addToWant = () => {
+        axios.post(`http://localhost:3001/shelves`, {
+            shelf: "want",
+            BookId: id,
+            UserId: authState.id
+        },
+            {
+                headers: {
+                    accessToken: localStorage.getItem("accessToken")
+                },
+            }
+        ).then((response) => {
+            if (response.data.error) {
+                setPopUp(response.data.error);
+            } else {
+                setPopUp("Book added to Want to Read shelf!");
+                handleSnackClick();
+                setAnchorEl(null);
+            }
+        });
+    };
 
     useEffect(() => {
         axios.get(`http://localhost:3001/books/byId/${id}`).then((response) => {
@@ -74,60 +171,97 @@ function Book() {
         <ThemeProvider theme={theme}>
             <CssBaseline />
             <main className="w-100">
-                <Container sx={{ py: 8, minHeight: "100vh" }} >
-                    <Grid
-                        container
-                        direction="row"
-                        alignItems="center"
-                        justifyContent="center"
+                <Snackbar 
+                    anchorOrigin={{
+                        vertical: "top",
+                        horizontal: "center"
+                    }} 
+                    open={snackOpen} 
+                    autoHideDuration={6000} 
+                    onClose={handleSnackClose}
                     >
-                        <Grid item xs={12} sm={2} md={2}>
-                            <CardMedia
-                                className="rounded"
-                                component="img"
-                                sx={{ width: 151, boxShadow: 3 }}
-                                image={bookObject.coverPhoto}
-                                alt={bookObject.title}
-                                title={bookObject.title}
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6} md={4}>
-                            <Card sx={{ display: 'flex' }}>
-                                <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                                    <CardContent sx={{ flex: '1 0 auto' }}>
-                                        <Typography component="div" variant="h4">
-                                            {bookObject.title}
-                                        </Typography>
-                                        <Typography align="left" variant="h6" color="text.secondary" component="div">
-                                            By: {bookObject.author}
-                                        </Typography>
-                                        <Typography align="left" component="div">
-                                            <Rating  sx={{ pl: 0, ml: 0 }} name="read-only" value={ratingValue} readOnly /> {ratingValue}
-                                        </Typography>
-                                        <Typography align="left" variant="subtitle1" color="text.secondary" component="div">
-                                            {bookObject.summary}
-                                        </Typography>
-                                    </CardContent>
-                                    <hr></hr>
-                                    <Box sx={{ display: 'flex', flexDirection: 'column', pl: 3, pb: 1 }}>
-                                        <Typography align="left" variant="caption" color="text.secondary" component="div">
-                                            <strong>Genre:</strong> {bookObject.genre}
-                                        </Typography>
-                                        <Typography align="left" variant="caption" color="text.secondary" component="div">
-                                            <strong>Date Published:</strong> {bookObject.datePublished}
-                                        </Typography>
-                                        <Typography align="left" variant="caption" color="text.secondary" component="div">
-                                            <strong>isbn:</strong> {bookObject.isbn}
-                                        </Typography>
+                    <Alert onClose={handleSnackClose} severity="success" sx={{ width: '100%' }}>
+                        {popUp}
+                    </Alert>
+                </Snackbar>
+                <Container sx={{ minHeight: "100vh", maxWidth: '100%' }} >
+                    <Box sx={{ p: 8, my: 5, minWidth: 'fit-content' }} className='contentBox rounded-3'>
+                        <Grid
+                            container
+                            direction="row"
+                            alignItems="center"
+                            justifyContent="center"
+                        >
+                            <Grid item xs={12} sm={2} md={2}>
+                                <CardMedia
+                                    className="rounded"
+                                    component="img"
+                                    sx={{ width: 151, boxShadow: 3 }}
+                                    image={bookObject.coverPhoto}
+                                    alt={bookObject.title}
+                                    title={bookObject.title}
+                                />
+
+                            </Grid>
+                            <Grid item xs={12} sm={6} md={4}>
+                                <Card sx={{ display: 'flex' }}>
+                                    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                                        <CardContent sx={{ flex: '1 0 auto' }}>
+                                            <Typography component="div" variant="h4">
+                                                {bookObject.title}
+                                            </Typography>
+                                            <Typography align="left" variant="h6" color="text.secondary" component="div">
+                                                By: {bookObject.author}
+                                            </Typography>
+                                            <Typography align="left" component="div">
+                                                <Rating sx={{ pl: 0, ml: 0 }} name="read-only" value={ratingValue} readOnly /> {ratingValue}
+                                            </Typography>
+                                            <Typography align="left" variant="subtitle1" color="text.secondary" component="div">
+                                                {bookObject.summary}
+                                            </Typography>
+                                        </CardContent>
+
+                                        <Box sx={{ display: 'flex', flexDirection: 'column', pl: 3, pb: 1 }}>
+                                            <hr></hr>
+                                            <Typography align="left" variant="caption" color="text.secondary" component="div">
+                                                <strong>Genre:</strong> {bookObject.genre}
+                                            </Typography>
+                                            <Typography align="left" variant="caption" color="text.secondary" component="div">
+                                                <strong>Date Published:</strong> {bookObject.datePublished}
+                                            </Typography>
+                                            <Typography align="left" variant="caption" color="text.secondary" component="div">
+                                                <strong>isbn:</strong> {bookObject.isbn}
+                                            </Typography>
+                                            <hr></hr>
+                                            <Button
+                                                id="basic-button"
+                                                aria-controls={open ? 'basic-menu' : undefined}
+                                                aria-haspopup="true"
+                                                aria-expanded={open ? 'true' : undefined}
+                                                onClick={handleClick}
+                                            >
+                                                Add To Shelf
+                                            </Button>
+                                            <Menu
+                                                id="basic-menu"
+                                                size="small"
+                                                anchorEl={anchorEl}
+                                                open={open}
+                                                onClose={handleClose}
+                                                MenuListProps={{
+                                                    'aria-labelledby': 'basic-button',
+                                                }}
+                                            >
+                                                <MenuItem onClick={addToRead}>Read</MenuItem>
+                                                <MenuItem onClick={addToReading}>Reading</MenuItem>
+                                                <MenuItem onClick={addToWant}>Want to Read</MenuItem>
+                                            </Menu>
+                                        </Box>
                                     </Box>
-                                </Box>
-
-                            </Card>
+                                </Card>
+                            </Grid>
                         </Grid>
-
-
-                    </Grid>
-
+                    </Box>
                 </Container>
             </main>
         </ThemeProvider>
