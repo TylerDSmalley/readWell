@@ -6,5 +6,10 @@ module.exports = (sequelize, DataTypes) => {
         }
     });
 
+    Reviews.associate = (models) => {
+        Reviews.belongsTo(models.Books);
+        Reviews.belongsTo(models.Users);
+    }
+
     return Reviews;
 };
