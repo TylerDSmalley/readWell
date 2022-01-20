@@ -11,5 +11,10 @@ module.exports = (sequelize, DataTypes) => {
         }
     });
 
+    Bookshelves.associate = (models) => {
+        Bookshelves.belongsTo(models.Books);
+        Bookshelves.belongsTo(models.Users);
+    }
+
     return Bookshelves;
 };
