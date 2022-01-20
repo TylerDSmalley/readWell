@@ -16,7 +16,7 @@ import Login from "./pages/Login";
 import PageNotFound from "./pages/PageNotFound";
 import UserList from './pages/admin/UserList';
 import BookList from './pages/admin/BookList';
-import ReviewList from './pages/ReviewList';
+import ReviewList from './pages/admin/ReviewList';
 import Book from './pages/Book';
 import { AuthContext } from "./helpers/AuthContext";
 import { useState, useEffect } from "react";
@@ -75,11 +75,11 @@ function App() {
         <Router>
           <ThemeProvider theme={theme}>
             <CssBaseline />
-            <AppBar position="relative">
-              <Toolbar>
+            <AppBar position="relative" className="navbar2">
+              <Toolbar className="navbar2">
                 <MenuBookIcon sx={{ mr: 2 }} />
                 <Typography variant="h6" color="inherit" noWrap>
-                <Link to="/" className='m-0'> ReadWell</Link>
+                <Link to="/" className='m-0 text-white'>ReadWell</Link>
                 </Typography>
                 <Typography variant="h5" color="inherit" align="right" noWrap style={{ flex: 1 }}>
                   {authState.email} 
@@ -87,7 +87,7 @@ function App() {
               </Toolbar>
             </AppBar>
           </ThemeProvider>
-          <div className="navbar">
+          <div className="navbar border-bottom rounded-2">
             <div className="links">
               {!authState.status ? (
                 <>
