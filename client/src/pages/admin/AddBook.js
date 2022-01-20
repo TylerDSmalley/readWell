@@ -1,7 +1,7 @@
 import React ,{useState} from 'react';
 import AWS from 'aws-sdk'
 
-const S3_BUCKET ='readWell';
+const S3_BUCKET ='readwell';
 const REGION ='ca-central-1';
 
 
@@ -27,7 +27,6 @@ const AddBook = () => {
     const uploadFile = (file) => {
 
         const params = {
-            ACL: 'public-read',
             Body: file,
             Bucket: S3_BUCKET,
             Key: file.name
@@ -44,8 +43,9 @@ const AddBook = () => {
 
 
     return <div>
+        <div><h5>Add Book</h5></div>
         <div> Upload Progress is {progress}%</div>
-        <input type="file" onChange={handleFileInput}/>
+        <input type="file" onChange={handleFileInput} required  accept="image/*" />
         <button onClick={() => uploadFile(selectedFile)}> Upload to S3</button>
     </div>
 }
