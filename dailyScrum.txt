@@ -154,3 +154,31 @@ N/A
 
 3. Where do I need assistance? What do I need to figure out?
 N/A
+
+------------------------------------------------------------------------------------
+<<Daily Scrum - 2021-01-20 >>
+--Tyler--
+1. What I have done / not done since last Scrum
+    - added individual book info page
+    - updated route to find book by id
+    - added bookshelves page with dynamic graph
+
+2. What I plan to do from this scrum to the next
+    - finish bookshelf
+    - start reviews
+    - look into server side error handling
+
+3. Where do I need assistance? What do I need to figure out?
+N/A
+
+--Ileana--
+1. What I have done / not done since last Scrum
+    - implemented AWS RDS for DB
+    - looked into how to upload images to S3 from admin panel
+
+2. What I plan to do from this scrum to the next
+    - add functionality to admin lists
+    
+
+3. Where do I need assistance? What do I need to figure out?
+N/A
