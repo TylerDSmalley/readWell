@@ -13,15 +13,15 @@ import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import Home from './pages/Home';
 import Registration from "./pages/Registration";
 import Login from "./pages/Login";
+import Book from './pages/Book';
+import Bookshelf from './pages/Bookshelf';
 import PageNotFound from "./pages/PageNotFound";
 import UserList from './pages/admin/UserList';
 import BookList from './pages/admin/BookList';
 import ReviewList from './pages/admin/ReviewList';
-import Book from './pages/Book';
 import { AuthContext } from "./helpers/AuthContext";
 import { useState, useEffect } from "react";
 import axios from 'axios';
-
 
 function App() {
   const theme = createTheme();
@@ -36,7 +36,7 @@ function App() {
     return (
       <Typography variant="body2" color="text.secondary" align="center">
         {'Copyright © '}
-        Team IT
+        Team IT -
         {new Date().getFullYear()}
         {'.'}
       </Typography>
@@ -115,6 +115,7 @@ function App() {
             <Route path='/login' element={<Login />} />
             <Route path='/' element={<Home />} />
             <Route path='/books/byId/:id' element={<Book />} />
+            <Route path='/bookshelves' element={<Bookshelf />} />
             <Route path='/admin/users/list' element={<UserList />} />
             <Route path='admin/books/list' element={<BookList />} />
             <Route path='admin/reviews/list' element={<ReviewList />} />
@@ -122,7 +123,7 @@ function App() {
           </Routes>
         </Router>
       </AuthContext.Provider>
-      <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer" className='w-100'>
+      <Box sx={{ p: 6 }} component="footer" className='footer w-100'>
         <Typography variant="h6" align="center" gutterBottom>
           Footer
         </Typography>
