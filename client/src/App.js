@@ -15,10 +15,13 @@ import Registration from "./pages/Registration";
 import Login from "./pages/Login";
 import Book from './pages/Book';
 import Bookshelf from './pages/Bookshelf';
+import Review from './pages/Review';
 import PageNotFound from "./pages/PageNotFound";
 import UserList from './pages/admin/UserList';
 import BookList from './pages/admin/BookList';
 import ReviewList from './pages/admin/ReviewList';
+import AddBook from './pages/admin/AddBook';
+import CreateUsers from './pages/admin/CreateUsers';
 import { AuthContext } from "./helpers/AuthContext";
 import { useState, useEffect } from "react";
 import axios from 'axios';
@@ -119,6 +122,7 @@ function App() {
             <Route path='/' element={<Home />} />
             <Route path='/books/byId/:id' element={<Book />} />
             <Route path='/bookshelves/:id' element={<Bookshelf />} />
+            <Route path='/review/:id' element={<Review />} />
             <Route path='/admin/users/list' element={<UserList />} />
             <Route path='admin/books/list' element={<BookList />} />
             <Route path='admin/reviews/list' element={<ReviewList />} />
