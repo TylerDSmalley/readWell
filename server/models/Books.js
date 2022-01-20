@@ -30,6 +30,11 @@ module.exports = (sequelize, DataTypes) => {
         },
         coverPhoto: {
             type: DataTypes.STRING(300),
+        },
+        rating: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: 0,
         }
     });
 
