@@ -35,6 +35,7 @@ import { AuthContext } from "../helpers/AuthContext";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import moment from "moment";
+import Link from '@mui/material/Link';
 
 function Bookshelf() {
     let { id } = useParams();
@@ -92,36 +93,22 @@ function Bookshelf() {
         },
     }));
 
-    function createData(id, coverPhoto, title, author, rating, personalRating, createdAt) {
+    function createData(coverPhoto, title, author, rating, personalRating, shelf, createdAt, id) {
         return {
-            id,
             coverPhoto,
             title,
             author,
             rating,
             personalRating,
+            shelf,
             createdAt,
+            id,
         };
     }
 
     const rows = listOfShelves.map((value) => (
-        createData(value.id ,value.Book.coverPhoto, value.Book.title, value.Book.author, value.Book.rating, value.personalRating, value.createdAt)
+        createData(value.Book.coverPhoto, value.Book.title, value.Book.author, value.Book.rating, value.personalRating, value.shelf, value.createdAt, value.id)
     ))
-
-    // const rows = [
-    //     createData('photo', "Game of Thrones", "George R.R. Martin", 4.7, 4, "2022-01-19"),
-    //     createData('photo', "Game of Thrones", "George R.R. Martin", 1, 4, "2022-01-19"),
-    //     createData('photo', "Game of Thrones", "George R.R. Martin", 3, 4, "2022-01-19"),
-    //     createData('photo', "Game of Thrones", "George R.R. Martin", 4, 4, "2022-01-19"),
-    //     createData('photo', "Game of Thrones", "George R.R. Martin", 5, 4, "2022-01-19"),
-    //     createData('photo', "Game of Thrones", "George R.R. Martin", 2, 4, "2022-01-19"),
-    //     createData('photo', "Game of Thrones", "George R.R. Martin", 3, 4, "2022-01-19"),
-    //     createData('photo', "Game of Thrones", "George R.R. Martin", 6, 4, "2022-01-19"),
-    //     createData('photo', "Game of Thrones", "George R.R. Martin", 5, 4, "2022-01-19"),
-    //     createData('photo', "Game of Thrones", "George R.R. Martin", 3, 4, "2022-01-19"),
-    //     createData('photo', "Game of Thrones", "George R.R. Martin", 4.7, 4, "2022-01-19"),
-    //     createData('photo', "Game of Thrones", "George R.R. Martin", 4.7, 4, "2022-01-19"),
-    // ];
 
     function descendingComparator(a, b, orderBy) {
         if (b[orderBy] < a[orderBy]) {
@@ -140,12 +127,6 @@ function Bookshelf() {
     }
 
     const headCells = [
-        {
-            id: 'id',
-            numeric: false,
-            disablePadding: true,
-            label: 'Id',
-        },
         {
             id: 'cover',
             numeric: false,
@@ -175,6 +156,12 @@ function Bookshelf() {
             numeric: true,
             disablePadding: false,
             label: 'rating',
+        },
+        {
+            id: 'shelf',
+            numeric: false,
+            disablePadding: true,
+            label: 'Shelf',
         },
         {
             id: 'dateAdded',
@@ -420,19 +407,21 @@ function Bookshelf() {
                                                 {rows.slice().sort(getComparator(order, orderBy))
                                                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                                     .map((row) => {
+                                                        let reviewPath = `http://localhost:3000/review/${row.id}`;
                                                         const isItemSelected = isSelected(row.id);
                                                         const labelId = `enhanced-table-checkbox-${row.id}`;
                                                         return (
                                                             <TableRow
                                                                 hover
-                                                                onClick={(event) => handleClick(event, row.id)}
                                                                 role="checkbox"
                                                                 aria-checked={isItemSelected}
                                                                 tabIndex={-1}
                                                                 key={row.title}
                                                                 selected={isItemSelected}
                                                             >
-                                                                <TableCell padding="checkbox">
+                                                                <TableCell
+                                                                    onClick={(event) => handleClick(event, row.id)}
+                                                                    padding="checkbox">
                                                                     <Checkbox
                                                                         color="primary"
                                                                         checked={isItemSelected}
@@ -441,7 +430,6 @@ function Bookshelf() {
                                                                         }}
                                                                     />
                                                                 </TableCell>
-                                                                <TableCell align="left">{row.id}</TableCell>
                                                                 <TableCell
                                                                     component="th"
                                                                     id={labelId}
@@ -462,14 +450,20 @@ function Bookshelf() {
                                                                 <TableCell align="left">{row.author}</TableCell>
                                                                 <TableCell align="left">{row.rating}</TableCell>
                                                                 <TableCell align="left">
-                                                                    <Rating 
-                                                                        sx={{ pl: 0, ml: 0 }} 
-                                                                        name="read-only" 
-                                                                        value={row.personalRating} 
+                                                                    <Rating
+                                                                        sx={{ pl: 0, ml: 0 }}
+                                                                        name="read-only"
+                                                                        value={row.personalRating}
                                                                         readOnly
                                                                     />
                                                                 </TableCell>
+                                                                <TableCell align="left">{row.shelf}</TableCell>
                                                                 <TableCell align="left">{moment(row.createdAt).format('DD/MM/YYYY - HH:MM')}</TableCell>
+                                                                <TableCell align="left">
+                                                                    <Link href={reviewPath} underline="hover">
+                                                                        Review/Rate
+                                                                    </Link>
+                                                                </TableCell>
                                                             </TableRow>
                                                         );
                                                     })}
