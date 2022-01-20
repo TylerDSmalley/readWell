@@ -11,6 +11,12 @@
 body {
   margin: 0;
   padding: 0;
+  background-image: url(https://trello-backgrounds.s3.amazonaws.com/SharedBackground/2398x1600/d4dd73af654e0eb9ffa1ce8e709f15ac/photo-1524995997946-a1c2e315a42f.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.contentBox {
   background-image: linear-gradient(90deg, #F9F7F4, rgb(252, 250, 250));
 }
 

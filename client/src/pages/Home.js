@@ -36,16 +36,8 @@ function Home() {
         <ThemeProvider theme={theme}>
             <CssBaseline />
             <main className="w-100">
-                {/* Hero unit */}
-                <Box
-                    sx={{
-                        bgcolor: 'background.paper',
-                        pt: 8,
-                        pb: 6,
-                    }}
-                >
-                    <Container maxWidth="full">
-                        <Typography
+                <Container sx={{ py: 8, my: 5,  minHeight: "100vh" }} maxWidth="md" className='contentBox rounded-3'>
+                <Typography
                             component="h1"
                             variant="h2"
                             align="center"
@@ -63,12 +55,7 @@ function Home() {
                             spacing={2}
                             justifyContent="center"
                         >
-
                         </Stack>
-                    </Container>
-                </Box>
-                <Container sx={{ py: 8,  minHeight: "100vh" }} maxWidth="md">
-                    {/* End hero unit */}
                     <Grid container spacing={4}>
                         {listOfBooks.map((value, key) => (
                             <Grid item key={key} xs={12} sm={6} md={4}>

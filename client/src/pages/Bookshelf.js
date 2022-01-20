@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Toolbar from '@mui/material/Toolbar';
@@ -27,6 +28,7 @@ import Tooltip from '@mui/material/Tooltip';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
+import { height } from '@mui/system';
 
 function Bookshelf() {
 
@@ -329,129 +331,131 @@ function Bookshelf() {
 
 
     return (
-        <Box sx={{ display: 'flex', minHeight: "100vh" }} maxWidth={"50%"}>
-            <CssBaseline />
-            <Box flexDirection="column">
-                <Toolbar position="static">
-                    <Typography
-                        align='left'
-                        variant="h6"
-                        noWrap
-                        component="div"
-                        sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-                    >
-                        My Books:
-                    </Typography>
-                    <Search>
-                        <SearchIconWrapper>
-                            <SearchIcon />
-                        </SearchIconWrapper>
-                        <StyledInputBase
-                            placeholder="Search…"
-                            inputProps={{ 'aria-label': 'search' }}
-                        />
-                    </Search>
-                </Toolbar>
-                <Divider />
-                <Box sx={{ display: 'flex', minHeight: "100vh" }} maxWidth={"100%"}>
-                    <List sx={{ pt: 3 }} >
-                        <Typography variant='h6'>Bookshelves</Typography>
-                        {['Read', 'Reading', 'Want to read'].map((text, index) => (
-                            <ListItem button key={text}>
-                                <LocalLibraryIcon sx={{ mr: 2 }} />
-                                <ListItemText secondary={text} />
-                            </ListItem>
-                        ))}
-                    </List>
-                    <Box
-                        component="main"
-                        sx={{ flexGrow: 1, p: 3 }}
-                    >
-                        <Paper sx={{ width: '100%', mb: 2 }}>
-                            <EnhancedTableToolbar numSelected={selected.length} />
-                            <TableContainer>
-                                <Table
-                                    sx={{ minWidth: 750 }}
-                                    aria-labelledby="tableTitle"
-                                    size='medium'
-                                >
-                                    <EnhancedTableHead
-                                        numSelected={selected.length}
-                                        order={order}
-                                        orderBy={orderBy}
-                                        onSelectAllClick={handleSelectAllClick}
-                                        onRequestSort={handleRequestSort}
-                                        rowCount={rows.length}
-                                    />
-                                    <TableBody>
-                                        {rows.slice().sort(getComparator(order, orderBy))
-                                            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                            .map((row, index) => {
-                                                const isItemSelected = isSelected(row.name);
-                                                const labelId = `enhanced-table-checkbox-${index}`;
-                                                return (
-                                                    <TableRow
-                                                        hover
-                                                        onClick={(event) => handleClick(event, row.name)}
-                                                        role="checkbox"
-                                                        aria-checked={isItemSelected}
-                                                        tabIndex={-1}
-                                                        key={row.name}
-                                                        selected={isItemSelected}
-                                                    >
-                                                        <TableCell padding="checkbox">
-                                                            <Checkbox
-                                                                color="primary"
-                                                                checked={isItemSelected}
-                                                                inputProps={{
-                                                                    'aria-labelledby': labelId,
-                                                                }}
-                                                            />
-                                                        </TableCell>
-                                                        <TableCell
-                                                            component="th"
-                                                            id={labelId}
-                                                            scope="row"
-                                                            padding="none"
-                                                        >
-                                                            {row.coverPhoto}
-                                                        </TableCell>
-                                                        <TableCell align="right">{row.title}</TableCell>
-                                                        <TableCell align="right">{row.author}</TableCell>
-                                                        <TableCell align="right">{row.rating}</TableCell>
-                                                        <TableCell align="right">{row.personalRating}</TableCell>
-                                                        <TableCell align="right">{row.createdAt}</TableCell>
-
-                                                    </TableRow>
-                                                );
-                                            })}
-                                        {emptyRows > 0 && (
-                                            <TableRow
-                                                style={{
-                                                    height: 53 * emptyRows,
-                                                }}
-                                            >
-                                                <TableCell colSpan={6} />
-                                            </TableRow>
-                                        )}
-                                    </TableBody>
-                                </Table>
-                            </TableContainer>
-                            <TablePagination
-                                rowsPerPageOptions={[5, 10, 25]}
+        <main className="w-100">
+            <Container sx={{ minHeight: "100vh", maxWidth: '100%' }}>
+                <Box sx={{ display: 'flex', p: 8, my: 5, minWidth: 'fit-content'}}  className='contentBox rounded-3'>
+                    <CssBaseline />
+                    <Box flexDirection="column">
+                        <Toolbar position="static">
+                            <Typography
+                                align='left'
+                                variant="h6"
+                                noWrap
                                 component="div"
-                                count={rows.length}
-                                rowsPerPage={rowsPerPage}
-                                page={page}
-                                onPageChange={handleChangePage}
-                                onRowsPerPageChange={handleChangeRowsPerPage}
-                            />
-                        </Paper>
-
+                                sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+                            >
+                                My Books:
+                            </Typography>
+                            <Search>
+                                <SearchIconWrapper>
+                                    <SearchIcon />
+                                </SearchIconWrapper>
+                                <StyledInputBase
+                                    placeholder="Search…"
+                                    inputProps={{ 'aria-label': 'search' }}
+                                />
+                            </Search>
+                        </Toolbar>
+                        <Divider />
+                        <Box sx={{ display: 'flex', minHeight: "100vh" }} maxWidth={"100%"}>
+                            <List sx={{ pt: 3 }} >
+                                <Typography variant='h6'>Bookshelves</Typography>
+                                {['Read', 'Reading', 'Want to read'].map((text, index) => (
+                                    <ListItem button key={text}>
+                                        <LocalLibraryIcon sx={{ mr: 2 }} />
+                                        <ListItemText secondary={text} />
+                                    </ListItem>
+                                ))}
+                            </List>
+                            <Box
+                                component="main"
+                                sx={{ flexGrow: 1, p: 3 }}
+                            >
+                                <Paper sx={{ width: '100%', mb: 2 }}>
+                                    <EnhancedTableToolbar numSelected={selected.length} />
+                                    <TableContainer>
+                                        <Table
+                                            sx={{ minWidth: 750 }}
+                                            aria-labelledby="tableTitle"
+                                            size='medium'
+                                        >
+                                            <EnhancedTableHead
+                                                numSelected={selected.length}
+                                                order={order}
+                                                orderBy={orderBy}
+                                                onSelectAllClick={handleSelectAllClick}
+                                                onRequestSort={handleRequestSort}
+                                                rowCount={rows.length}
+                                            />
+                                            <TableBody>
+                                                {rows.slice().sort(getComparator(order, orderBy))
+                                                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                                    .map((row, index) => {
+                                                        const isItemSelected = isSelected(row.name);
+                                                        const labelId = `enhanced-table-checkbox-${index}`;
+                                                        return (
+                                                            <TableRow
+                                                                hover
+                                                                onClick={(event) => handleClick(event, row.name)}
+                                                                role="checkbox"
+                                                                aria-checked={isItemSelected}
+                                                                tabIndex={-1}
+                                                                key={row.name}
+                                                                selected={isItemSelected}
+                                                            >
+                                                                <TableCell padding="checkbox">
+                                                                    <Checkbox
+                                                                        color="primary"
+                                                                        checked={isItemSelected}
+                                                                        inputProps={{
+                                                                            'aria-labelledby': labelId,
+                                                                        }}
+                                                                    />
+                                                                </TableCell>
+                                                                <TableCell
+                                                                    component="th"
+                                                                    id={labelId}
+                                                                    scope="row"
+                                                                    padding="none"
+                                                                >
+                                                                    {row.coverPhoto}
+                                                                </TableCell>
+                                                                <TableCell align="right">{row.title}</TableCell>
+                                                                <TableCell align="right">{row.author}</TableCell>
+                                                                <TableCell align="right">{row.rating}</TableCell>
+                                                                <TableCell align="right">{row.personalRating}</TableCell>
+                                                                <TableCell align="right">{row.createdAt}</TableCell>
+                                                            </TableRow>
+                                                        );
+                                                    })}
+                                                {emptyRows > 0 && (
+                                                    <TableRow
+                                                        style={{
+                                                            height: 53 * emptyRows,
+                                                        }}
+                                                    >
+                                                        <TableCell colSpan={6} />
+                                                    </TableRow>
+                                                )}
+                                            </TableBody>
+                                        </Table>
+                                    </TableContainer>
+                                    <TablePagination
+                                        rowsPerPageOptions={[5, 10, 25]}
+                                        component="div"
+                                        count={rows.length}
+                                        rowsPerPage={rowsPerPage}
+                                        page={page}
+                                        onPageChange={handleChangePage}
+                                        onRowsPerPageChange={handleChangeRowsPerPage}
+                                    />
+                                </Paper>
+                            </Box>
+                        </Box>
                     </Box>
                 </Box>
-            </Box>
-        </Box>
+            </Container>
+        </main>
     );
 }
 

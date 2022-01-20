@@ -23,8 +23,8 @@ function UserList() {
   };
 
   return (
-    <div>
-      <h5>List of Users</h5>
+    <div className='vh-100'>
+      <h5 className='contentBox mt-3 p-2 rounded'>List of Users</h5>
       {listOfUsers.map((value, key) => {
         return (
           <div key={key} className="card m-2">

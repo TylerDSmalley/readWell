@@ -10,7 +10,7 @@ function BookList(){
 
   useEffect(()=>{
     axios.get("http://localhost:3001/admin/books/list").then((response)=>{
-     setListOfBooks(response.data);
+      setListOfBooks(response.data);
     });
   },[]);
 
