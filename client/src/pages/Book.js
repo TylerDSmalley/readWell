@@ -10,6 +10,7 @@ import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import Rating from '@mui/material/Rating';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useParams } from "react-router-dom";
 import axios from "axios";
@@ -24,10 +25,12 @@ function Book() {
     const [bookObject, setBookObject] = useState({});
     // const [reviews, setReviews] = useState([]);
     // const [newReview, setNewReview] = useState("");
+    const [ratingValue, setRatingValue] = useState(0);
 
     useEffect(() => {
         axios.get(`http://localhost:3001/books/byId/${id}`).then((response) => {
             setBookObject(response.data);
+            setRatingValue(response.data.rating);
         });
 
         // axios.get(`http://localhost:3001/reviews/${id}`).then((response) => {
@@ -73,71 +76,50 @@ function Book() {
         <ThemeProvider theme={theme}>
             <CssBaseline />
             <main className="w-100">
-                {/* Hero unit */}
-                <Box
-                    sx={{
-                        bgcolor: 'background.paper',
-                        pt: 8,
-                        pb: 6,
-                    }}
-                >
-                    <Container maxWidth="full">
-                        <Typography
-                            component="h1"
-                            variant="h2"
-                            align="center"
-                            color="text.primary"
-                            gutterBottom
-                        >
-                            Book Details
-                        </Typography>
-                        <Stack
-                            sx={{ pt: 4 }}
-                            direction="row"
-                            spacing={2}
-                            justifyContent="center"
-                        >
-                        </Stack>
-                    </Container>
-                </Box>
-                <Container sx={{ py: 8, minHeight: "100vh" }} maxWidth="xs" >
-                    {/* End hero unit */}
+                <Container sx={{ py: 8, minHeight: "100vh" }} >
                     <Grid
-                        spacing={0}
-                        direction="column"
+                        container
+                        direction="row"
                         alignItems="center"
                         justifyContent="center"
                     >
+                        <Grid item xs={12} sm={2} md={2}>
+                            <CardMedia
+                                className="rounded"
+                                component="img"
+                                sx={{ width: 151, boxShadow: 3 }}
+                                image={bookObject.coverPhoto}
+                                alt={bookObject.title}
+                                title={bookObject.title}
+                            />
+                        </Grid>
                         <Grid item xs={12} sm={6} md={4}>
                             <Card sx={{ display: 'flex' }}>
-                                <CardMedia
-                                    component="img"
-                                    sx={{ width: 151 }}
-                                    image={bookObject.coverPhoto}
-                                    alt="Live from space album cover"
-                                />
                                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                                     <CardContent sx={{ flex: '1 0 auto' }}>
-                                        <Typography component="div" variant="h5">
+                                        <Typography component="div" variant="h4">
                                             {bookObject.title}
                                         </Typography>
-                                        <Typography variant="subtitle1" color="text.secondary" component="div">
+                                        <Typography align="left" variant="h6" color="text.secondary" component="div">
+                                            By: {bookObject.author}
+                                        </Typography>
+                                        <Typography align="left" component="div">
+                                            <Rating align="left" sx={{ pl: 0, ml: 0 }} name="read-only" value={ratingValue} readOnly />
+                                        </Typography>
+                                        <Typography align="left" variant="subtitle1" color="text.secondary" component="div">
                                             {bookObject.summary}
                                         </Typography>
                                     </CardContent>
                                     <hr></hr>
                                     <Box sx={{ display: 'flex', flexDirection: 'column', pl: 3, pb: 1 }}>
-                                        <Typography align="left" variant="subtitle1" color="text.secondary" component="div">
-                                            Author: {bookObject.author}
+                                        <Typography align="left" variant="caption" color="text.secondary" component="div">
+                                            <strong>Genre:</strong> {bookObject.genre}
                                         </Typography>
-                                        <Typography align="left" variant="subtitle1" color="text.secondary" component="div">
-                                            Genre: {bookObject.genre}
+                                        <Typography align="left" variant="caption" color="text.secondary" component="div">
+                                            <strong>Date Published:</strong> {bookObject.datePublished}
                                         </Typography>
-                                        <Typography align="left" variant="subtitle1" color="text.secondary" component="div">
-                                            Date Published: {bookObject.datePublished}
-                                        </Typography>
-                                        <Typography align="left" variant="subtitle1" color="text.secondary" component="div">
-                                            isbn: {bookObject.isbn}
+                                        <Typography align="left" variant="caption" color="text.secondary" component="div">
+                                            <strong>isbn:</strong> {bookObject.isbn}
                                         </Typography>
                                     </Box>
                                 </Box>
@@ -145,7 +127,9 @@ function Book() {
                             </Card>
                         </Grid>
 
+
                     </Grid>
+
                 </Container>
             </main>
         </ThemeProvider>
