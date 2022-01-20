@@ -96,7 +96,7 @@ function App() {
                 </>
               ) : (
                 <>
-                  
+                <Link to="/bookshelves"> Bookshelves</Link>
                 </>
               )}
               {authState.role === "admin" &&
