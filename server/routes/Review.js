@@ -13,8 +13,6 @@ router.post("/", validateToken, async (req, res) => {
     res.json(req.body);
 });
 
-
-
 // router.get("/:id", async (req, res) => {
 //     const UserId = req.params.id;
 //     const listOfReviews = await Reviews.findAll({
