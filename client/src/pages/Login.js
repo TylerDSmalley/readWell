@@ -36,14 +36,14 @@ function Login() {
             data.isLocal = "no"
             // Check if we have some result:
             await axios.post("http://localhost:3001/auth/login", data).then((response) => {
-            if (response.data.error) {
-                alert(response.data.error);
-            } else {
-                localStorage.setItem("accessToken", response.data.token);
-                setAuthState({ email: response.data.email, id: response.data.id, status: true });
-                navigate("/");
-            };
-        });
+                if (response.data.error) {
+                    alert(response.data.error);
+                } else {
+                    localStorage.setItem("accessToken", response.data.token);
+                    setAuthState({ email: response.data.email, id: response.data.id, status: true });
+                    navigate("/");
+                };
+            });
         }
     };
 
@@ -68,107 +68,101 @@ function Login() {
         });
     };
 
-
-
-    function Copyright(props) {
-        return (
-            <Typography variant="body2" color="text.secondary" align="center" {...props}>
-                {'Copyright Â© '}
-                <Link color="inherit" href="#">
-                    Team IT
-                </Link>{' '}
-                {new Date().getFullYear()}
-                {'.'}
-            </Typography>
-        );
-    };
-
     const theme = createTheme();
 
     return (
         <div >
             <ThemeProvider theme={theme}>
-                <Container sx={{minHeight: "100vh" }} component="main" maxWidth="xs">
+                <Container sx={{ minHeight: "100vh" }} component="main" maxWidth="xs">
                     <CssBaseline />
-                    <Box
-                        sx={{
-                            marginTop: 8,
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                        }}
-                    >
-                        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                            <LockOutlinedIcon />
-                        </Avatar>
-                        <Typography component="h1" variant="h5">
-                            Sign in
-                        </Typography>
-                        <Box noValidate sx={{ mt: 1 }}>
-                            <TextField
-                                className="bg-light"
-                                margin="normal"
-                                required
-                                fullWidth
-                                id="email"
-                                label="Email Address"
-                                name="email"
-                                autoComplete="email"
-                                autoFocus
-                                onChange={(event) => {
-                                    setEmail(event.target.value);
-                                }}
-                            />
-                            <TextField
-                                className="bg-light"
-                                margin="normal"
-                                required
-                                fullWidth
-                                name="password"
-                                label="Password"
-                                type="password"
-                                id="password"
-                                autoComplete="current-password"
-                                onChange={(event) => {
-                                    setPassword(event.target.value);
-                                }}
-                            />
-                            <FormControlLabel
-                                control={<Checkbox value="remember" color="primary" />}
-                                label="Remember me"
-                            />
-                            <Button
-                                onClick={login}
-                                fullWidth
-                                variant="contained"
-                                sx={{ mt: 3, mb: 2 }}
-                            >
-                                Sign In
-                            </Button>
+                    <main className="w-100">
+                        <Box
+                            sx={{
+                                p: 5,
+                                marginTop: 8,
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                            }}
+                            className='contentBox rounded-3'
+                        >
+                            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                                <LockOutlinedIcon />
+                            </Avatar>
+                            <Typography component="h1" variant="h5">
+                                Sign in
+                            </Typography>
+                            <Box noValidate sx={{ mt: 1 }}>
+                                <TextField
+                                    className="bg-light"
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    id="email"
+                                    label="Email Address"
+                                    name="email"
+                                    autoComplete="email"
+                                    autoFocus
+                                    onChange={(event) => {
+                                        setEmail(event.target.value);
+                                    }}
+                                />
+                                <TextField
+                                    className="bg-light"
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    name="password"
+                                    label="Password"
+                                    type="password"
+                                    id="password"
+                                    autoComplete="current-password"
+                                    onChange={(event) => {
+                                        setPassword(event.target.value);
+                                    }}
+                                />
+                                <FormControlLabel
+                                    control={<Checkbox value="remember" color="primary" />}
+                                    label="Remember me"
+                                />
+                                <Button
+                                    className='w-75'
+                                    onClick={login}
+                                    variant="contained"
+                                    sx={{ mt: 3, mb: 2 }}
+                                >
+                                    Sign In
+                                </Button>
 
-                            <GoogleLogin
-                                clientId={clientId}
-                                buttonText="Log in with Google"
-                                onSuccess={onSuccess}
-                                onFailure={onFailure}
-                                cookiePolicy={'single_host_origin'}
-                            />
+                                <GoogleLogin
+                                    className='w-75 mb-5'
+                                    clientId={clientId}
+                                    buttonText="Log in with Google"
+                                    onSuccess={onSuccess}
+                                    onFailure={onFailure}
+                                    cookiePolicy={'single_host_origin'}
+                                />
 
-                            <Grid container>
-                                <Grid item xs>
-                                    <Link href="#" variant="body2">
-                                        Forgot password?
-                                    </Link>
+                                <Grid 
+                                    container sx={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    alignItems: 'center',
+                            }}>
+                                    {/* <Grid item xs>
+                                        <Link href="#" variant="body2">
+                                            Forgot password?
+                                        </Link>
+                                    </Grid> */}
+                                    <Grid item>
+                                        <Link href="/registration" variant="body2">
+                                            {"Don't have an account? Sign Up"}
+                                        </Link>
+                                    </Grid>
                                 </Grid>
-                                <Grid item>
-                                    <Link href="/registration" variant="body2">
-                                        {"Don't have an account? Sign Up"}
-                                    </Link>
-                                </Grid>
-                            </Grid>
+                            </Box>
                         </Box>
-                    </Box>
-                    <Copyright sx={{ mt: 8, mb: 4 }} />
+                    </main>
                 </Container>
             </ThemeProvider>
         </div>

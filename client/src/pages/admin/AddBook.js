@@ -76,8 +76,18 @@ const AddBook = () => {
         <ThemeProvider theme={theme}>
             <CssBaseline />
             <main className="w-100">
-                <Container sx={{ minHeight: "100vh"}} maxWidth="md">
-                    <Box sx={{ display: 'flex', p: 8, my: 5 }} justifyContent="center" className='contentBox rounded-3'>
+                <Container sx={{ minHeight: "100vh"}} maxWidth="sm">
+                    <Box 
+                        sx={{ 
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            p: 8, 
+                            my: 5 }} 
+                        justifyContent="center" 
+                        className='contentBox rounded-3'
+                    
+                    >
                     <Box flexDirection="column" justifyContent="flex-start">
                         <div><h5>Add Book</h5></div>
                         <label>Image of Book Cover</label><br />

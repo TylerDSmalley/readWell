@@ -65,7 +65,7 @@ function Registration() {
     //         navigate("/");
     //     });
     // };
-    
+
     const onSubmit = (data) => {
         axios.post("http://localhost:3001/auth", data).then((response) => {
             navigate("/");
@@ -76,82 +76,85 @@ function Registration() {
     return (
         <div>
             <ThemeProvider theme={theme}>
-                <Container sx={{minHeight: "100vh" }} component="main" maxWidth="xs">
+                <Container sx={{ minHeight: "100vh" }} component="main" maxWidth="xs">
                     <CssBaseline />
-                    <Box
-                        sx={{
-                            marginTop: 8,
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                        }}
-                    >
-                        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                            <LockOutlinedIcon />
-                        </Avatar>
-                        <Typography component="h1" variant="h5">
-                            Sign up
-                        </Typography>
-                        <Box sx={{ mt: 3 }}>
-                            <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
-                                <Form >
-                                    <Grid container spacing={2}>
-                                        <Grid item xs={12} sm={6}>
-                                            <label>First Name: </label>
-                                            <Field
-                                                className="form-control"
-                                                name="firstName"
-                                            />
-                                            <ErrorMessage name="firstName" component="span" />
+                    <main className="w-100">
+                        <Box
+                            sx={{
+                                p: 5,
+                                marginTop: 8,
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                            }}
+                            className='contentBox rounded-3'
+                        >
+                            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                                <LockOutlinedIcon />
+                            </Avatar>
+                            <Typography component="h1" variant="h5">
+                                Sign up
+                            </Typography>
+                            <Box sx={{ mt: 3 }}>
+                                <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
+                                    <Form >
+                                        <Grid container spacing={2}>
+                                            <Grid item xs={12} sm={6}>
+                                                <label>First Name: </label>
+                                                <Field
+                                                    className="form-control"
+                                                    name="firstName"
+                                                />
+                                                <ErrorMessage name="firstName" component="span" />
+                                            </Grid>
+                                            <Grid item xs={12} sm={6}>
+                                                <label>Last Name: </label>
+                                                <Field
+                                                    className="form-control"
+                                                    name="lastName"
+                                                />
+                                                <ErrorMessage name="lastName" component="span" />
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                                <label>Email: </label>
+                                                <Field
+                                                    className="form-control"
+                                                    name="email"
+                                                />
+                                                <ErrorMessage name="email" component="span" />
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                                <label>Password: </label>
+                                                <Field
+                                                    className="form-control"
+                                                    name="password"
+                                                />
+                                                <ErrorMessage name="password" component="span" />
+                                            </Grid>
+                                            <Grid item xs={12}>
+
+                                            </Grid>
                                         </Grid>
-                                        <Grid item xs={12} sm={6}>
-                                        <label>Last Name: </label>
-                                            <Field
-                                                className="form-control"
-                                                name="lastName"
-                                            />
-                                            <ErrorMessage name="lastName" component="span" />
+                                        <Button
+                                            type="submit"
+                                            fullWidth
+                                            variant="contained"
+                                            sx={{ mt: 3, mb: 2 }}
+                                        >
+                                            Sign Up
+                                        </Button>
+                                        <Grid container justifyContent="flex-end">
+                                            <Grid item>
+                                                <Link href="/login" variant="body2">
+                                                    Already have an account? Sign in
+                                                </Link>
+                                            </Grid>
                                         </Grid>
-                                        <Grid item xs={12}>
-                                        <label>Email: </label>
-                                            <Field
-                                                className="form-control"
-                                                name="email"
-                                            />
-                                            <ErrorMessage name="email" component="span" />
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                        <label>Password: </label>
-                                            <Field
-                                                className="form-control"
-                                                name="password"
-                                            />
-                                            <ErrorMessage name="password" component="span" />
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            
-                                        </Grid>
-                                    </Grid>
-                                    <Button
-                                        type="submit"
-                                        fullWidth
-                                        variant="contained"
-                                        sx={{ mt: 3, mb: 2 }}
-                                    >
-                                        Sign Up
-                                    </Button>
-                                    <Grid container justifyContent="flex-end">
-                                        <Grid item>
-                                            <Link href="/login" variant="body2">
-                                                Already have an account? Sign in
-                                            </Link>
-                                        </Grid>
-                                    </Grid>
-                                </Form>
-                            </Formik>
+                                    </Form>
+                                </Formik>
+                            </Box>
                         </Box>
-                    </Box>
-                    <Copyright sx={{ mt: 5 }} />
+                    </main>
                 </Container>
             </ThemeProvider>
         </div>

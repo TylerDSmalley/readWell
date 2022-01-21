@@ -46,20 +46,20 @@ function Review() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <main className="w-100">
-      <Container sx={{ py: 8, my: 5,  minHeight: "100vh" }} maxWidth="md" className='contentBox rounded-3'>
-      <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
-        <Form className="formContainer">
-          <label>Review </label>
-          <ErrorMessage name="summary" component="span" />
-          <Field
-            type="textArea"
-            name="summary"
-            placeholder="(Ex. John123...)"
-          />
-          <button type="submit"> submit review </button>
-        </Form>
-      </Formik>
-      </Container>
+        <Container sx={{ py: 8, my: 5, minHeight: "100vh" }} maxWidth="md" className='contentBox rounded-3'>
+          <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
+            <Form className="formContainer">
+              <label>Review </label>
+              <ErrorMessage name="summary" component="span" />
+              <Field
+                type="textArea"
+                name="summary"
+                placeholder="(Ex. John123...)"
+              />
+              <button type="submit"> submit review </button>
+            </Form>
+          </Formik>
+        </Container>
       </main>
     </ThemeProvider>
   )
