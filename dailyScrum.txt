@@ -182,3 +182,39 @@ N/A
 
 3. Where do I need assistance? What do I need to figure out?
 N/A
+
+------------------------------------------------------------------------------------
+<<Daily Scrum - 2021-01-21 >>
+--Tyler--
+1. What I have done / not done since last Scrum
+    - started reviews
+    - got closer to finishing bookshelf
+        1)still needs delete functionality
+        2)still need to filter each shelf according to selection
+
+2. What I plan to do from this scrum to the next
+    - finish bookshelf
+        -still needs delete functionality
+        -still need to filter each shelf according to selection
+    - finish reviews
+        -needs styling
+        -needs personal rating
+    - finish book page
+        -needs review list under the book
+    - look into server side error handling
+
+3. Where do I need assistance? What do I need to figure out?
+N/A
+
+--Ileana--
+1. What I have done / not done since last Scrum
+    - admin lists now have add and delete for all fields
+
+2. What I plan to do from this scrum to the next
+    - include edit functionality for admin list fields 
+    - add search bar functionality/logic to library
+    - start on registration email confirmation
+    - start heroku hosting 
+
+3. Where do I need assistance? What do I need to figure out?
+N/A
