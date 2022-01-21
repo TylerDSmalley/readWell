@@ -162,7 +162,7 @@ function Bookshelf() {
             id: 'rating',
             numeric: true,
             disablePadding: false,
-            label: 'rating',
+            label: 'My rating',
         },
         {
             id: 'shelf',
