@@ -19,7 +19,7 @@ const shelvesRouter = require("./routes/Bookshelves")
 app.use("/shelves", shelvesRouter);
 
 const reviewsRouter = require("./routes/Review")
-app.use("/reviews", reviewsRouter);
+app.use("/review", reviewsRouter);
 
 const adminRouter = require("./routes/Admin")
 app.use("/admin", adminRouter);
