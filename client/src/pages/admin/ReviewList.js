@@ -14,6 +14,14 @@ function ReviewList() {
     });
   }, []);
 
+  const deleteReview = (id) => {
+    axios.delete(`http://localhost:3001/admin/reviews/delete/${id}`, {
+      headers: { accessToken: localStorage.getItem("accessToken") },
+    }).then(() => {
+      window.location.reload(false);
+    });
+  };
+
   return (
     <div>
       <h5>List of Book Reviews</h5>
@@ -22,7 +30,7 @@ function ReviewList() {
         <div key={key} className="card m-2">
           <div className="card-body">
           <p className="card-title"><b>Review:</b>&nbsp;{value.summary}</p>
-          <button type="button" className="btn btn-primary" onClick={()=>{navigate(`/admin/reviews/delete/${value.id}`)}}>Delete</button>
+          <button type="button" className="btn btn-primary" onClick={()=>{deleteReview(value.id)}}>Delete</button>
           </div>
           </div>
         );

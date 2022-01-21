@@ -14,6 +14,15 @@ function BookList(){
     });
   },[]);
 
+  const deleteBook = (id) => {
+    axios.delete(`http://localhost:3001/admin/books/delete/${id}`, {
+      headers: { accessToken: localStorage.getItem("accessToken") },
+    }).then(() => {
+      window.location.reload(false);
+    });
+  };
+
+
     return(
         <div>
             <h5>List of Books</h5>
@@ -30,7 +39,7 @@ function BookList(){
           <p className="cart-text"><b>Publisher:</b>&nbsp;{value.publisher}</p>
           <p className="cart-text"><b>ISBN:</b>&nbsp;{value.isbn}</p>
           <button type="button" className="btn btn-primary" onClick={()=>{navigate(`/admin/list`)}}>Edit</button>
-          <button type="button" className="btn btn-primary" onClick={()=>{navigate(`/admin/books/delete/${value.id}`)}}>Delete</button>
+          <button type="button" className="btn btn-primary" onClick={() => {deleteBook(value.id)}}>Delete</button>
           </div>
           </div>
         );
