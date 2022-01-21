@@ -214,6 +214,7 @@ N/A
     - include edit functionality for admin list fields 
     - add search bar functionality/logic to library
     - start on registration email confirmation
+    - populate RDS with data
     - start heroku hosting 
 
 3. Where do I need assistance? What do I need to figure out?

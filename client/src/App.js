@@ -34,6 +34,16 @@ function App() {
     role: "",
     status: false,
   });
+  
+  const [listOfBooks, setListOfBooks] = useState([]);
+  useEffect(() => {
+    axios.get(
+        "http://localhost:3001/books",
+    ).then((response) => {
+        setListOfBooks(response.data);
+        console.log(response.data)
+    });
+}, []);
 
   function Copyright() {
     return (
@@ -112,6 +122,9 @@ function App() {
                 </>
               }
             </div>
+
+            {/* Search bar component lives here */}
+
             <div className="loggedInContainer">
               {authState.status && <button onClick={logout}> Logout</button>}
             </div>

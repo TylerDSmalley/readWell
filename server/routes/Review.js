@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { Bookshelves, Books, Reviews } = require("../models");
+const { Bookshelves, Books, Reviews, Users } = require("../models");
 const { validateToken } = require("../middlewares/AuthMiddleware");
 
 router.post("/", validateToken, async (req, res) => {
@@ -12,5 +12,18 @@ router.post("/", validateToken, async (req, res) => {
     });
     res.json(req.body);
 });
+
+
+
+// router.get("/:id", async (req, res) => {
+//     const UserId = req.params.id;
+//     const listOfReviews = await Reviews.findAll({
+//         where: {
+//             UserId: UserId, 
+//         },
+//         include: [Books]
+//     });
+//     res.json(listOfBookshelves);
+// });
 
 module.exports = router;
