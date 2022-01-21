@@ -51,7 +51,7 @@ router.put("/update/:bookId", async (req, res) => {
 });
 
 //delete book by id
-router.delete("delete/:bookId", validateToken, async (req, res) => {
+router.delete("/books/delete/:bookId", validateToken, async (req, res) => {
     const bookId = req.params.bookId;
     await Books.destroy({
         where: {
