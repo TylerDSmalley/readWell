@@ -1,4 +1,8 @@
 import React from 'react';
+import CssBaseline from '@mui/material/CssBaseline';
+import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
+import { createTheme, ThemeProvider } from '@mui/material/styles'
 import axios from 'axios';
 import {useEffect,useState} from 'react';
 import {useNavigate} from 'react-router-dom';
@@ -7,6 +11,7 @@ function BookList(){
 
     const [listOfBooks,setListOfBooks] = useState([]);
     let navigate = useNavigate();
+    const theme = createTheme();
 
   useEffect(()=>{
     axios.get("http://localhost:3001/admin/books/list").then((response)=>{
@@ -24,7 +29,21 @@ function BookList(){
 
 
     return(
-        <div>
+      <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <main className="w-100">
+      <Container sx={{ minHeight: "100vh"}} maxWidth="lg">
+      <Box 
+                        sx={{ 
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            p: 8, 
+                            my: 5 }} 
+                        justifyContent="center" 
+                        className='contentBox rounded-3'
+                    
+                    >
             <h5>List of Books</h5>
             {listOfBooks.map((value,key)=>{
         return (
@@ -44,7 +63,10 @@ function BookList(){
           </div>
         );
         })}
-        </div>
+        </Box>
+        </Container>
+        </main>
+        </ThemeProvider>
     )
 }
 
