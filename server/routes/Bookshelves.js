@@ -21,7 +21,6 @@ router.post("/", validateToken, async (req, res) => {
 //get all Bookshelves by id
 router.get("/:id", async (req, res) => {
     const UserId = req.params.id;
-    console.log(UserId)
     const listOfBookshelves = await Bookshelves.findAll({
         where: {
             UserId: UserId, 
@@ -30,6 +29,22 @@ router.get("/:id", async (req, res) => {
     });
     res.json(listOfBookshelves);
 });
+
+//get shelf row by id
+router.get("/rowid/:rowId", async (req, res) => {
+    const rowId = req.params.rowId;
+    const shelfRow = await Bookshelves.findByPk(rowId)
+    res.json(shelfRow);
+});
+
+router.put("/rate/:rowId", async (req, res) => {
+    const rowId = req.params.rowId;
+    await Bookshelves.update({
+        personalRating: req.body.personalRating
+        }, 
+        { where: {id : rowId} });
+        res.json(req.body.personalRating);
+    });
 
 
 // //update book by id
