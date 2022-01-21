@@ -35,26 +35,26 @@ function Home() {
         <ThemeProvider theme={theme}>
             <CssBaseline />
             <main className="w-100">
-                <Container sx={{ py: 8, my: 5,  minHeight: "100vh" }} maxWidth="md" className='contentBox rounded-3'>
-                <Typography
-                            component="h1"
-                            variant="h2"
-                            align="center"
-                            color="text.primary"
-                            gutterBottom
-                        >
-                            The Library
-                        </Typography>
-                        <Typography variant="h5" align="center" color="text.secondary" paragraph>
-                            Browse our selection of books and start adding to your bookshelves!
-                        </Typography>
-                        <Stack
-                            sx={{ pt: 4 }}
-                            direction="row"
-                            spacing={2}
-                            justifyContent="center"
-                        >
-                        </Stack>
+                <Container sx={{ py: 8, my: 5, minHeight: "100vh" }} maxWidth="md" className='contentBox rounded-3'>
+                    <Typography
+                        component="h1"
+                        variant="h2"
+                        align="center"
+                        color="text.primary"
+                        gutterBottom
+                    >
+                        The Library
+                    </Typography>
+                    <Typography variant="h5" align="center" color="text.secondary" paragraph>
+                        Browse our selection of books and start adding to your bookshelves!
+                    </Typography>
+                    <Stack
+                        sx={{ pt: 4 }}
+                        direction="row"
+                        spacing={2}
+                        justifyContent="center"
+                    >
+                    </Stack>
                     <Grid container spacing={4}>
                         {listOfBooks.map((value, key) => (
                             <Grid item key={key} xs={12} sm={6} md={4}>
