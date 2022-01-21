@@ -31,13 +31,16 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import { height } from '@mui/system';
+import Button from '@mui/material/Button';
 import { AuthContext } from "../helpers/AuthContext";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import moment from "moment";
 import Link from '@mui/material/Link';
+import { useNavigate } from "react-router-dom";
 
 function Bookshelf() {
+    let navigate = useNavigate();
     let { id } = useParams();
     const { authState } = useContext(AuthContext)
     const [listOfShelves, setListOfShelves] = useState([]);
@@ -47,7 +50,6 @@ function Bookshelf() {
         axios.get(`http://localhost:3001/shelves/${id}`).then((response) => {
             setListOfShelves(response.data);
             setPersonalRating(response.data.rating);
-            console.log(response.data)
         });
     }, [id]);
 
@@ -93,7 +95,7 @@ function Bookshelf() {
         },
     }));
 
-    function createData(id ,coverPhoto, title, author, rating, personalRating, shelf, createdAt, bookId) {
+    function createData(id, coverPhoto, title, author, rating, personalRating, shelf, createdAt, bookId) {
         return {
             id,
             coverPhoto,
@@ -108,7 +110,7 @@ function Bookshelf() {
     }
 
     const rows = listOfShelves.map((value) => (
-        createData(value.id ,value.Book.coverPhoto, value.Book.title, value.Book.author, value.Book.rating, value.personalRating, value.shelf, value.createdAt, value.Book.id)
+        createData(value.id, value.Book.coverPhoto, value.Book.title, value.Book.author, value.Book.rating, value.personalRating, value.shelf, value.createdAt, value.Book.id)
     ))
 
     function descendingComparator(a, b, orderBy) {
@@ -414,7 +416,7 @@ function Bookshelf() {
                                                 {rows.slice().sort(getComparator(order, orderBy))
                                                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                                     .map((row) => {
-                                                        let reviewPath = `http://localhost:3000/review/${row.id}`;
+                                                        let reviewPath = `/review/${row.bookId}/${row.id}`;
                                                         const isItemSelected = isSelected(row.id);
                                                         const labelId = `enhanced-table-checkbox-${row.id}`;
                                                         return (
@@ -468,9 +470,13 @@ function Bookshelf() {
                                                                 <TableCell align="left">{row.shelf}</TableCell>
                                                                 <TableCell align="left">{moment(row.createdAt).format('DD/MM/YYYY - HH:MM')}</TableCell>
                                                                 <TableCell align="left">
-                                                                    <Link href={reviewPath} underline="hover">
-                                                                        Review/Rate
-                                                                    </Link>
+                                                                    <Button size="small"
+                                                                        onClick={
+                                                                            () => {
+                                                                                navigate(reviewPath)
+                                                                            }
+                                                                        }
+                                                                    >Review/Rate</Button>
                                                                 </TableCell>
                                                             </TableRow>
                                                         );
