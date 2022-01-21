@@ -188,6 +188,7 @@ function Book() {
                     <Box sx={{ p: 8, my: 5, minWidth: 'fit-content' }} className='contentBox rounded-3'>
                         <Grid
                             container
+                            spacing={2}
                             direction="row"
                             alignItems="center"
                             justifyContent="center"
