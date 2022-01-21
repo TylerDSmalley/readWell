@@ -102,7 +102,7 @@ router.get("/reviews/list", async (req, res) => {
 });
 
 //delete book review
-router.delete("reviews/delete/:reviewId", validateToken, async (req, res) => {
+router.delete("/reviews/delete/:reviewId", validateToken, async (req, res) => {
     const reviewId = req.params.reviewId;
     await Reviews.destroy({
         where: {
