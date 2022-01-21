@@ -93,8 +93,9 @@ function Bookshelf() {
         },
     }));
 
-    function createData(coverPhoto, title, author, rating, personalRating, shelf, createdAt, id) {
+    function createData(id ,coverPhoto, title, author, rating, personalRating, shelf, createdAt, bookId) {
         return {
+            id,
             coverPhoto,
             title,
             author,
@@ -102,12 +103,12 @@ function Bookshelf() {
             personalRating,
             shelf,
             createdAt,
-            id,
+            bookId,
         };
     }
 
     const rows = listOfShelves.map((value) => (
-        createData(value.Book.coverPhoto, value.Book.title, value.Book.author, value.Book.rating, value.personalRating, value.shelf, value.createdAt, value.id)
+        createData(value.id ,value.Book.coverPhoto, value.Book.title, value.Book.author, value.Book.rating, value.personalRating, value.shelf, value.createdAt, value.Book.id)
     ))
 
     function descendingComparator(a, b, orderBy) {
@@ -127,6 +128,12 @@ function Bookshelf() {
     }
 
     const headCells = [
+        {
+            id: 'id',
+            numeric: false,
+            disablePadding: true,
+            label: '',
+        },
         {
             id: 'cover',
             numeric: false,
@@ -194,7 +201,7 @@ function Bookshelf() {
                             checked={rowCount > 0 && numSelected === rowCount}
                             onChange={onSelectAllClick}
                             inputProps={{
-                                'aria-label': 'select all desserts',
+                                'aria-label': 'select all books',
                             }}
                         />
                     </TableCell>
@@ -416,7 +423,7 @@ function Bookshelf() {
                                                                 role="checkbox"
                                                                 aria-checked={isItemSelected}
                                                                 tabIndex={-1}
-                                                                key={row.title}
+                                                                key={row.id}
                                                                 selected={isItemSelected}
                                                             >
                                                                 <TableCell
@@ -430,6 +437,7 @@ function Bookshelf() {
                                                                         }}
                                                                     />
                                                                 </TableCell>
+                                                                <TableCell align="left"></TableCell>
                                                                 <TableCell
                                                                     component="th"
                                                                     id={labelId}
