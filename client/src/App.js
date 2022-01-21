@@ -1,5 +1,9 @@
 import './App.css';
 import React from 'react';
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
 //Material UI imports
 import AppBar from '@mui/material/AppBar';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
@@ -136,7 +140,7 @@ function App() {
             <Route path='/' element={<Home />} />
             <Route path='/books/byId/:id' element={<Book />} />
             <Route path='/bookshelves/:id' element={<Bookshelf />} />
-            <Route path='/review/:id' element={<Review />} />
+            <Route path='/review/:bookId/:rowId' element={<Review />} />
             <Route path='/admin/users/list' element={<UserList />} />
             <Route path='admin/books/list' element={<BookList />} />
             <Route path='admin/reviews/list' element={<ReviewList />} />
