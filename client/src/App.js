@@ -34,7 +34,7 @@ function App() {
     role: "",
     status: false,
   });
-  
+
   const [listOfBooks, setListOfBooks] = useState([]);
   useEffect(() => {
     axios.get(
@@ -119,6 +119,7 @@ function App() {
                   <Link to="/admin/books/list"> Book List</Link>
                   <Link to="/admin/books/create">Add Book</Link>
                   <Link to="/admin/users/create">Create User</Link>
+                  <Link to="/admin/reviews/list">Review List</Link>
                 </>
               }
             </div>
