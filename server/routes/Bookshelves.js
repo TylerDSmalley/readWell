@@ -20,10 +20,24 @@ router.post("/", validateToken, async (req, res) => {
 
 //get all Bookshelves by id
 router.get("/:id", async (req, res) => {
-    const UserId = req.params.id;
+    const userId = req.params.id;
     const listOfBookshelves = await Bookshelves.findAll({
         where: {
-            UserId: UserId, 
+            UserId: userId, 
+        },
+        include: [Books]
+    });
+    res.json(listOfBookshelves);
+});
+
+//get all Bookshelves by id and shelf name
+router.get("/:id/:shelf", async (req, res) => {
+    const userId = req.params.id;
+    const shelfName = req.params.shelf
+    const listOfBookshelves = await Bookshelves.findAll({
+        where: {
+            UserId: userId,
+            shelf: shelfName,
         },
         include: [Books]
     });
@@ -62,15 +76,15 @@ router.put("/rate/:rowId", async (req, res) => {
 //     res.json(req.body);
 // });
 
-// //delete book by id
-// router.delete("delete/:bookId", validateToken, async (req, res) => {
-//     const bookId = req.params.bookId;
-//     await Bookshelves.destroy({
-//         where: {
-//             id: bookId,
-//         },
-//     });
-//     res.json("BOOK DELETED");
-// })
+//delete book from shelf by id
+router.delete("/delete/:shelfId", validateToken, async (req, res) => {
+    const shelfId = req.params.shelfId;
+    await Bookshelves.destroy({
+        where: {
+            id: shelfId,
+        },
+    });
+    res.json("BOOK DELETED");
+})
 
 module.exports = router;
