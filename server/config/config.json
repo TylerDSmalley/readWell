@@ -1,9 +1,9 @@
 {
   "development": {
     "username": "root",
-    "password": "root",
+    "password": "mAJ4^9Jb$KJf01leQw8z",
     "database": "read_well",
-    "host": "localhost",
+    "host": "readwell.clyrq5kbck4j.ca-central-1.rds.amazonaws.com",
     "dialect": "mysql"
   },
   "test": {
