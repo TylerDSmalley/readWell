@@ -194,13 +194,13 @@ N/A
 
 2. What I plan to do from this scrum to the next
     - finish bookshelf
-        -still needs delete functionality
-        -still need to filter each shelf according to selection
-    - finish reviews
-        -needs styling
-        -needs personal rating
+        -DONE-still needs delete functionality
+        -DONE-still need to filter each shelf according to selection
+    - finish reviews 
+        -DONE-needs styling
+        -DONE-needs personal rating
     - finish book page
-        -needs review list under the book
+        -DONE-needs review list under the book
     - look into server side error handling
 
 3. Where do I need assistance? What do I need to figure out?
@@ -216,6 +216,46 @@ N/A
     - start on registration email confirmation
     - populate RDS with data
     - start heroku hosting 
+
+3. Where do I need assistance? What do I need to figure out?
+N/A
+
+------------------------------------------------------------------------------------
+<<Daily Scrum - 2021-01-22 >>
+--Tyler--
+1. What I have done / not done since last Scrum
+    - finished bookshelf
+        -DONE-still needs delete functionality
+        -DONE-still need to filter each shelf according to selection
+    - finish reviews 
+        -DONE-needs styling
+        -DONE-needs personal rating
+    - finish book page
+        -DONE-needs review list under the book
+    - look into server side error handling
+
+2. What I plan to do from this scrum to the next
+    - host app on heroku
+    - fix review edit
+    - fix table name display
+    - fix table search bar
+    - add better navbar 
+    
+
+3. Where do I need assistance? What do I need to figure out?
+N/A
+
+--Ileana--
+1. What I have done / not done since last Scrum
+    - include edit functionality for admin list fields 
+    - added search bar functionality/logic to library
+    - populateed RDS with data
+
+2. What I plan to do from this scrum to the next
+    - start on registration email confirmation
+    - edit functionality in admin
+    - turn admin cards into table - include pagination
+    - host app on heroku
 
 3. Where do I need assistance? What do I need to figure out?
 N/A
