@@ -49,7 +49,9 @@ function ReviewList() {
               return (
                 <div key={key} className="card m-2">
                   <div className="card-body">
+                    <p className="card-title"><b>Book:</b>&nbsp;{value.Book.title}</p>
                     <p className="card-title"><b>Review:</b>&nbsp;{value.summary}</p>
+                    <p className="card-title"><b>Review By:</b>&nbsp;{value.User.email}</p>
                     <button type="button" className="btn btn-primary" onClick={() => { deleteReview(value.id) }}>Delete</button>
                   </div>
                 </div>
