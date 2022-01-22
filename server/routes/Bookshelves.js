@@ -31,7 +31,7 @@ router.get("/:id", async (req, res) => {
 });
 
 //get all Bookshelves by id and shelf name
-router.get("/:id/:shelf", async (req, res) => {
+router.get("/userrows/:id/:shelf", async (req, res) => {
     const userId = req.params.id;
     const shelfName = req.params.shelf
     const listOfBookshelves = await Bookshelves.findAll({
@@ -45,8 +45,10 @@ router.get("/:id/:shelf", async (req, res) => {
 });
 
 //get shelf row by id
-router.get("/rowid/:rowId", async (req, res) => {
+router.get("/row/:rowId", async (req, res) => {
     const rowId = req.params.rowId;
+    console.log(rowId)
+    console.log("ASDFASDFSDAFSADFSADFSADFD")
     const shelfRow = await Bookshelves.findByPk(rowId)
     res.json(shelfRow);
 });

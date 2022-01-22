@@ -51,6 +51,7 @@ function Bookshelf() {
         axios.get(`http://localhost:3001/shelves/${id}`).then((response) => {
             setListOfShelves(response.data);
             setPersonalRating(response.data.rating);
+            console.log(listOfShelves)
         });
     }, [id]);
 
@@ -63,12 +64,12 @@ function Bookshelf() {
             });
         } else if (shelf === "Want to read") {
             shelf = "want"
-            axios.get(`http://localhost:3001/shelves/${id}/${shelf}`).then((response) => {
+            axios.get(`http://localhost:3001/shelves/userrows/${id}/${shelf}`).then((response) => {
                 setListOfShelves(response.data);
                 setPersonalRating(response.data.rating);
             });
         } else {
-            axios.get(`http://localhost:3001/shelves/${id}/${shelf}`).then((response) => {
+            axios.get(`http://localhost:3001/shelves/userrows/${id}/${shelf}`).then((response) => {
                 setListOfShelves(response.data);
                 setPersonalRating(response.data.rating);
             });

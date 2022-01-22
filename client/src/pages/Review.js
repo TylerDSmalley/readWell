@@ -20,6 +20,7 @@ import { useParams } from "react-router-dom";
 function Review() {
   const [bookObject, setBookObject] = useState({});
   const [personalRating, setPersonalRating] = useState(0);
+  const [personalReview, setPersonalReview] = useState("");
   const theme = createTheme();
   const { authState } = useContext(AuthContext)
   let { bookId, rowId } = useParams();
@@ -29,13 +30,11 @@ function Review() {
     if (!localStorage.getItem("accessToken")) {
       navigate("/login");
     } else {
-      console.log(bookId)
       axios.get(`http://localhost:3001/books/byId/${bookId}`).then((response) => {
         setBookObject(response.data);
       });
 
-      console.log(rowId)
-      axios.get(`http://localhost:3001/shelves/rowid/${rowId}`).then((response) => {
+      axios.get(`http://localhost:3001/shelves/row/${rowId}`).then((response) => {
         setPersonalRating(response.data.personalRating);
       });
 
