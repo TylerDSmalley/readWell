@@ -63,10 +63,10 @@ function Review() {
   const onSubmit = (data) => {
     data.BookId = bookId;
     data.UserId = authState.id
-    axios.post("http://localhost:3001/reviews", data, {
+    axios.post("http://localhost:3001/review", data, {
       headers: { accessToken: localStorage.getItem("accessToken") },
     }).then((response) => {
-      navigate(`/bookshelves/${data.UserId}`);
+      navigate(`/shelves/${data.UserId}`);
     });
   };
 

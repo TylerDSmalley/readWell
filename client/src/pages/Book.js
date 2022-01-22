@@ -18,6 +18,8 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
+import { Divider } from "@mui/material";
+import Chip from '@mui/material/Chip';
 
 function Book() {
     let { id } = useParams();
@@ -25,7 +27,7 @@ function Book() {
     const theme = createTheme();
     const { authState } = useContext(AuthContext)
     const [bookObject, setBookObject] = useState({});
-    // const [listOfReviews, setListOfReviews] = useState([]);
+    const [listOfReviews, setListOfReviews] = useState([]);
     // const [newReview, setNewReview] = useState("");
     const [ratingValue, setRatingValue] = useState(0);
     const [popUp, setPopUp] = useState("");
@@ -128,9 +130,9 @@ function Book() {
             setRatingValue(response.data.rating);
         });
 
-        // axios.get(`http://localhost:3001/reviews/${id}`).then((response) => {
-        //     setReviews(response.data);
-        // });
+        axios.get(`http://localhost:3001/review/${id}`).then((response) => {
+            setListOfReviews(response.data);
+        });
     }, [id]);
 
     // const addReview = () => {
@@ -171,15 +173,15 @@ function Book() {
         <ThemeProvider theme={theme}>
             <CssBaseline />
             <main className="w-100">
-                <Snackbar 
+                <Snackbar
                     anchorOrigin={{
                         vertical: "top",
                         horizontal: "center"
-                    }} 
-                    open={snackOpen} 
-                    autoHideDuration={6000} 
+                    }}
+                    open={snackOpen}
+                    autoHideDuration={6000}
                     onClose={handleSnackClose}
-                    >
+                >
                     <Alert onClose={handleSnackClose} severity="success" sx={{ width: '100%' }}>
                         {popUp}
                     </Alert>
@@ -262,6 +264,23 @@ function Book() {
                                 </Card>
                             </Grid>
                         </Grid>
+                        <Divider color="text.secondary" className="mt-3 mb3"><Chip label="Reviews" /></Divider>
+                        <div className="container w-50 mt-3">
+                            {listOfReviews.map((value, key) => (
+                                <div key={key} class="card">
+                                <div class="card-header">
+                                    user name
+                                </div>
+                                <div class="card-body">
+                                    <blockquote class="blockquote mb-0">
+                                        <p>{value.summary}</p>
+                                        <footer class="blockquote-footer">placeholder <cite title="Source Title">placeholder</cite></footer>
+                                    </blockquote>
+                                </div>
+                            </div>
+                        ))}
+                        </div>
+
                     </Box>
                 </Container>
             </main>
