@@ -236,29 +236,35 @@ function Book() {
                                                 <strong>isbn:</strong> {bookObject.isbn}
                                             </Typography>
                                             <hr></hr>
-                                            <Button
-                                                id="basic-button"
-                                                aria-controls={open ? 'basic-menu' : undefined}
-                                                aria-haspopup="true"
-                                                aria-expanded={open ? 'true' : undefined}
-                                                onClick={handleClick}
-                                            >
-                                                Add To Shelf
-                                            </Button>
-                                            <Menu
-                                                id="basic-menu"
-                                                size="small"
-                                                anchorEl={anchorEl}
-                                                open={open}
-                                                onClose={handleClose}
-                                                MenuListProps={{
-                                                    'aria-labelledby': 'basic-button',
-                                                }}
-                                            >
-                                                <MenuItem onClick={addToRead}>Read</MenuItem>
-                                                <MenuItem onClick={addToReading}>Reading</MenuItem>
-                                                <MenuItem onClick={addToWant}>Want to Read</MenuItem>
-                                            </Menu>
+
+                                            {authState.status &&
+                                                <>
+                                                    <Button
+                                                        id="basic-button"
+                                                        aria-controls={open ? 'basic-menu' : undefined}
+                                                        aria-haspopup="true"
+                                                        aria-expanded={open ? 'true' : undefined}
+                                                        onClick={handleClick}
+                                                    >
+                                                        Add To Shelf
+                                                    </Button>
+                                                    <Menu
+                                                        id="basic-menu"
+                                                        size="small"
+                                                        anchorEl={anchorEl}
+                                                        open={open}
+                                                        onClose={handleClose}
+                                                        MenuListProps={{
+                                                            'aria-labelledby': 'basic-button',
+                                                        }}
+                                                    >
+                                                        <MenuItem onClick={addToRead}>Read</MenuItem>
+                                                        <MenuItem onClick={addToReading}>Reading</MenuItem>
+                                                        <MenuItem onClick={addToWant}>Want to Read</MenuItem>
+                                                    </Menu>
+                                                </>
+                                            }
+
                                         </Box>
                                     </Box>
                                 </Card>
@@ -268,17 +274,17 @@ function Book() {
                         <div className="container w-50 mt-3">
                             {listOfReviews.map((value, key) => (
                                 <div key={key} class="card">
-                                <div class="card-header">
-                                    user name
+                                    <div class="card-header">
+                                        user name
+                                    </div>
+                                    <div class="card-body">
+                                        <blockquote class="blockquote mb-0">
+                                            <p>{value.summary}</p>
+                                            <footer class="blockquote-footer">placeholder <cite title="Source Title">placeholder</cite></footer>
+                                        </blockquote>
+                                    </div>
                                 </div>
-                                <div class="card-body">
-                                    <blockquote class="blockquote mb-0">
-                                        <p>{value.summary}</p>
-                                        <footer class="blockquote-footer">placeholder <cite title="Source Title">placeholder</cite></footer>
-                                    </blockquote>
-                                </div>
-                            </div>
-                        ))}
+                            ))}
                         </div>
 
                     </Box>
