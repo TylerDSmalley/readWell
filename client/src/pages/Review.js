@@ -29,10 +29,12 @@ function Review() {
     if (!localStorage.getItem("accessToken")) {
       navigate("/login");
     } else {
+      console.log(bookId)
       axios.get(`http://localhost:3001/books/byId/${bookId}`).then((response) => {
         setBookObject(response.data);
       });
 
+      console.log(rowId)
       axios.get(`http://localhost:3001/shelves/rowid/${rowId}`).then((response) => {
         setPersonalRating(response.data.personalRating);
       });
@@ -61,7 +63,7 @@ function Review() {
   const onSubmit = (data) => {
     data.BookId = bookId;
     data.UserId = authState.id
-    axios.post("http://localhost:3001/review", data, {
+    axios.post("http://localhost:3001/reviews", data, {
       headers: { accessToken: localStorage.getItem("accessToken") },
     }).then((response) => {
       navigate(`/bookshelves/${data.UserId}`);
