@@ -58,37 +58,22 @@ function Home() {
                     <Grid container spacing={4}>
                         {listOfBooks.map((value, key) => (
                             <Grid item key={key} xs={12} sm={6} md={4}>
-                                <Card
-                                    sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
+                                <Button size="small"
+                                    onClick={
+                                        () => {
+                                            navigate(`/books/byId/${value.id}`)
+                                        }
+                                    }
                                 >
                                     <CardMedia
                                         component="img"
                                         sx={{
-                                            // 16:9
-                                            pt: '56.25%',
+                                            maxWidth: "75%"
                                         }}
                                         image={value.coverPhoto}
                                         alt="random"
                                     />
-                                    <CardContent sx={{ flexGrow: 1 }}>
-                                        <Typography gutterBottom variant="h5" component="h2">
-                                            {value.title}
-                                        </Typography>
-                                        <Typography>
-                                            {value.summary}
-                                        </Typography>
-                                    </CardContent>
-                                    <CardActions>
-                                        <Button size="small"
-                                            onClick={
-                                                () => {
-                                                    navigate(`/books/byId/${value.id}`)
-                                                }
-                                            }
-                                        >View details</Button>
-                                        <Button size="small">Add to Bookshelf</Button>
-                                    </CardActions>
-                                </Card>
+                                </Button>
                             </Grid>
                         ))}
                     </Grid>
