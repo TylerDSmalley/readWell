@@ -18,7 +18,8 @@ router.get("/:id", async (req, res) => {
     const listOfReviews = await Reviews.findAll({
         where: {
             BookId: id, 
-        }
+        },
+        include: [Users]
     });
     res.json(listOfReviews);
 });
