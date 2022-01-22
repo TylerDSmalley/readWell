@@ -45,6 +45,7 @@ function Bookshelf() {
     const { authState } = useContext(AuthContext)
     const [listOfShelves, setListOfShelves] = useState([]);
     const [personalRating, setPersonalRating] = useState([]);
+    const [booksToDelete, setBooksToDelete] = useState([]);
 
     useEffect(() => {
         axios.get(`http://localhost:3001/shelves/${id}`).then((response) => {
@@ -299,7 +300,7 @@ function Bookshelf() {
 
                 {numSelected > 0 ? (
                     <Tooltip title="Delete">
-                        <IconButton>
+                        <IconButton onClick={handleDelete}>
                             <DeleteIcon />
                         </IconButton>
                     </Tooltip>
@@ -357,7 +358,29 @@ function Bookshelf() {
         }
 
         setSelected(newSelected);
+        console.log(newSelected);
     };
+
+    const handleDelete = () => {
+        selected.map((shelfId) => (
+
+            axios.delete(`http://localhost:3001/shelves/delete/${shelfId}`, {
+                headers: { accessToken: localStorage.getItem("accessToken") }
+            }).then(() => {
+                setSelected(
+                    selected.filter((val) => {
+                        return val.id !== shelfId;
+                    })
+                )
+
+                setListOfShelves(
+                    listOfShelves.filter((val) => {
+                        return val.id !== shelfId;
+                    })
+                )
+            })
+        ));
+    }
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
