@@ -20,6 +20,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 import { Divider } from "@mui/material";
 import Chip from '@mui/material/Chip';
+import moment from "moment";
 
 function Book() {
     let { id } = useParams();
@@ -134,6 +135,8 @@ function Book() {
             setListOfReviews(response.data);
         });
     }, [id]);
+
+    console.log(listOfReviews)
 
     // const addReview = () => {
     //     axios.post("http://localhost:3001/reviews", {
@@ -273,14 +276,16 @@ function Book() {
                         <Divider color="text.secondary" className="mt-3 mb3"><Chip label="Reviews" /></Divider>
                         <div className="container w-50 mt-3">
                             {listOfReviews.map((value, key) => (
-                                <div key={key} class="card">
-                                    <div class="card-header">
-                                        user name
+                                <div key={key} className="card w-auto mt-2 mb-4 shadow-sm">
+                                    <div className="card-header d-flex justify-content-between">
+                                        <div>{value.User.firstName}'s Review</div>
+                                        <div>Posted on: {moment(value.updatedAt).format('DD/MM/YYYY')}</div>
+                                        
                                     </div>
-                                    <div class="card-body">
-                                        <blockquote class="blockquote mb-0">
+                                    <div className="card-body">
+                                        <blockquote className="blockquote mb-0">
                                             <p>{value.summary}</p>
-                                            <footer class="blockquote-footer">placeholder <cite title="Source Title">placeholder</cite></footer>
+                                            <footer className="blockquote-footer"> <cite title="Source Title"></cite></footer>
                                         </blockquote>
                                     </div>
                                 </div>
