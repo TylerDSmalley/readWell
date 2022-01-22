@@ -53,6 +53,27 @@ function Bookshelf() {
         });
     }, [id]);
 
+    const changeShelf = (shelf) => {
+        if (shelf === "All") {
+            console.log(shelf)
+            axios.get(`http://localhost:3001/shelves/${id}`).then((response) => {
+                setListOfShelves(response.data);
+                setPersonalRating(response.data.rating);
+            });
+        } else if (shelf === "Want to read") {
+            shelf = "want"
+            axios.get(`http://localhost:3001/shelves/${id}/${shelf}`).then((response) => {
+                setListOfShelves(response.data);
+                setPersonalRating(response.data.rating);
+            });
+        } else {
+            axios.get(`http://localhost:3001/shelves/${id}/${shelf}`).then((response) => {
+                setListOfShelves(response.data);
+                setPersonalRating(response.data.rating);
+            });
+        }
+    }
+
     const Search = styled('div')(({ theme }) => ({
         position: 'relative',
         borderRadius: theme.shape.borderRadius,
@@ -385,8 +406,16 @@ function Bookshelf() {
                         <Box sx={{ display: 'flex', minHeight: "100vh" }} maxWidth={"100%"}>
                             <List sx={{ pt: 3 }} >
                                 <Typography variant='h6'>Bookshelves</Typography>
-                                {['Read', 'Reading', 'Want to read'].map((text) => (
-                                    <ListItem button key={text}>
+                                {['All', 'Read', 'Reading', 'Want to read'].map((text) => (
+                                    <ListItem
+                                        button
+                                        key={text}
+                                        onClick={
+                                            () => {
+                                                changeShelf(text)
+                                            }
+                                        }
+                                    >
                                         <LocalLibraryIcon sx={{ mr: 2 }} />
                                         <ListItemText secondary={text} />
                                     </ListItem>
