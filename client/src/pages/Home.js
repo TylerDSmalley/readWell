@@ -68,6 +68,7 @@ function Home() {
                                     <CardMedia
                                         component="img"
                                         sx={{
+                                            px: 0,
                                             maxWidth: "75%"
                                         }}
                                         image={value.coverPhoto}

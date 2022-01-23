@@ -29,6 +29,7 @@ import CreateUsers from './pages/admin/CreateUsers';
 import { AuthContext } from "./helpers/AuthContext";
 import { useState, useEffect } from "react";
 import axios from 'axios';
+import SearchBar from "../src/components/SearchBar"
 
 function App() {
   const theme = createTheme();
@@ -128,7 +129,7 @@ function App() {
               }
             </div>
 
-            {/* Search bar component lives here */}
+            {/* <SearchBar placeholder="Enter a book name.." data={listOfBooks} /> */}
 
             <div className="loggedInContainer">
               {authState.status && <button onClick={logout}> Logout</button>}
