@@ -35,13 +35,13 @@ function UserList() {
     });
   };
 
-  function createData(firstName, lastName, email, role, isLocal, status) {
-    return { firstName, lastName, email, role, isLocal, status };
+  function createData(id,firstName, lastName, email, role, isLocal, status) {
+    return { id,firstName, lastName, email, role, isLocal, status };
   }
 
 
   const rows = listOfUsers.map((value) => (
-    createData(value.firstName, value.lastName, value.email, value.role, value.isLocal, value.status)
+    createData(value.id, value.firstName, value.lastName, value.email, value.role, value.isLocal, value.status)
   ))
 
   const [page, setPage] = React.useState(0);
@@ -60,8 +60,10 @@ function UserList() {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
+      <caption>List of Users</caption>
         <TableHead>
           <TableRow>
+            <TableCell align="right">ID</TableCell>
             <TableCell align="right">First Name</TableCell>
             <TableCell align="right">Last Name</TableCell>
             <TableCell align="right">Email</TableCell>
@@ -72,12 +74,12 @@ function UserList() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
             <TableRow
               key={row.id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-
+              <TableCell align="right">{row.id}</TableCell>
               <TableCell align="right">{row.firstName}</TableCell>
               <TableCell align="right">{row.lastName}</TableCell>
               <TableCell align="right">{row.email}</TableCell>
