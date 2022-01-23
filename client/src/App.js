@@ -12,6 +12,11 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import IconButton from '@mui/material/IconButton';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
+import Divider from '@mui/material/Divider';
 //--
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import Home from './pages/Home';
@@ -29,37 +34,19 @@ import CreateUsers from './pages/admin/CreateUsers';
 import { AuthContext } from "./helpers/AuthContext";
 import { useState, useEffect } from "react";
 import axios from 'axios';
+import Chip from '@mui/material/Chip';
 import SearchBar from "../src/components/SearchBar"
 
 function App() {
   const theme = createTheme();
+  const [anchorEl, setAnchorEl] = useState(null);
   const [authState, setAuthState] = useState({
     email: "",
     id: 0,
     role: "",
     status: false,
   });
-
   const [listOfBooks, setListOfBooks] = useState([]);
-  useEffect(() => {
-    axios.get(
-        "http://localhost:3001/books",
-    ).then((response) => {
-        setListOfBooks(response.data);
-        console.log(response.data)
-    });
-}, []);
-
-  function Copyright() {
-    return (
-      <Typography variant="body2" color="text.secondary" align="center">
-        {'Copyright © '}
-        Team IT -
-        {new Date().getFullYear()}
-        {'.'}
-      </Typography>
-    );
-  }
 
   useEffect((authState) => {
     axios
@@ -82,6 +69,25 @@ function App() {
       });
   }, []);
 
+  function Copyright() {
+    return (
+      <Typography variant="body2" color="text.secondary" align="center">
+        {'Copyright © '}
+        Team IT -
+        {new Date().getFullYear()}
+        {'.'}
+      </Typography>
+    );
+  }
+
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   const logout = () => {
     localStorage.removeItem("accessToken");
     setAuthState({ email: "", id: 0, role: "", status: false });
@@ -93,47 +99,91 @@ function App() {
         <Router>
           <ThemeProvider theme={theme}>
             <CssBaseline />
-            <AppBar position="relative" className="navbar2">
+
+            <AppBar position="static" className="navbar2">
               <Toolbar className="navbar2">
                 <MenuBookIcon sx={{ mr: 2 }} />
                 <Typography variant="h6" color="inherit" noWrap>
-                <Link to="/" className='m-0 text-white'>ReadWell</Link>
+                  <Link to="/" className='m-0 text-white'>ReadWell</Link>
                 </Typography>
+
+
+
                 <Typography variant="h5" color="inherit" align="right" noWrap style={{ flex: 1 }}>
-                  {authState.email} 
+                  {!authState.status ? (
+                    <>
+                      <Link to="/login"> Login</Link>
+                    </>
+                  ) : (
+                    <div>
+                      <IconButton
+                        size="large"
+                        aria-label="account of current user"
+                        aria-controls="menu-appbar"
+                        aria-haspopup="true"
+                        onClick={handleMenu}
+                        color="inherit"
+                      >
+                        <AccountCircle />
+                      </IconButton>
+                      <Menu
+                        id="menu-appbar"
+                        anchorEl={anchorEl}
+                        anchorOrigin={{
+                          vertical: 'top',
+                          horizontal: 'right',
+                        }}
+                        keepMounted
+                        transformOrigin={{
+                          vertical: 'top',
+                          horizontal: 'right',
+                        }}
+                        open={Boolean(anchorEl)}
+                        onClose={handleClose}
+                      >
+                        <MenuItem className='mx-3 my-2' >
+                          {authState.email}
+                        </MenuItem>
+                        <Divider color="text.secondary" className="mt-3 mb3"><Chip label="User Menu" /></Divider>
+                        <MenuItem className='my-3'>
+                          <Link to={{ pathname: `/shelves/${authState.id}` }}>
+                            Bookshelves
+                          </Link>
+                        </MenuItem>
+                        {authState.role === "admin" &&
+                          <>
+                            <Divider color="text.secondary" className="mt-3 mb3"><Chip label="Admin" /></Divider>
+                            <MenuItem className='mb-1' >
+                              <Link to="/admin/users/list"> User List</Link>
+                            </MenuItem>
+                            <MenuItem className='mb-1'>
+                              <Link to="/admin/books/list"> Book List</Link>
+                            </MenuItem>
+                            <MenuItem className='mb-1'>
+                              <Link to="/admin/books/create">Add Book</Link>
+                            </MenuItem>
+                            <MenuItem className='mb-1'>
+                              <Link to="/admin/users/create">Create User</Link>
+                            </MenuItem>
+                            <MenuItem className='mb-1'>
+                              <Link to="/admin/reviews/list">Review List</Link>
+                            </MenuItem>
+                          </>
+                        }
+                        <Divider color="text.secondary" className="mt-3 mb3"></Divider>
+                        <MenuItem onClick={logout}>Logout</MenuItem>
+                      </Menu>
+                    </div>
+                  )}
                 </Typography>
+
               </Toolbar>
             </AppBar>
+
+
           </ThemeProvider>
-          <div className="navbar border-bottom rounded-2">
-            <div className="links">
-              {!authState.status ? (
-                <>
-                  <Link to="/login"> Login</Link>
-                  <Link to="/registration"> Registration</Link>
-                </>
-              ) : (
-                <>
-                <Link to={{pathname: `/shelves/${authState.id}`}}>
-                Bookshelves</Link>
-                </>
-              )}
-              {authState.role === "admin" &&
-                <>
-                  <Link to="/admin/users/list"> User List</Link>
-                  <Link to="/admin/books/list"> Book List</Link>
-                  <Link to="/admin/books/create">Add Book</Link>
-                  <Link to="/admin/users/create">Create User</Link>
-                  <Link to="/admin/reviews/list">Review List</Link>
-                </>
-              }
-            </div>
+          <div className="navbar border-bottom shadow-sm">
 
-            {/* <SearchBar placeholder="Enter a book name.." data={listOfBooks} /> */}
-
-            <div className="loggedInContainer">
-              {authState.status && <button onClick={logout}> Logout</button>}
-            </div>
           </div>
           <Routes>
             <Route path='/registration' element={<Registration />} />
@@ -146,7 +196,7 @@ function App() {
             <Route path='admin/books/list' element={<BookList />} />
             <Route path='admin/reviews/list' element={<ReviewList />} />
             <Route path='admin/books/create' element={<AddBook />} />
-            <Route path='admin/users/create' element={<CreateUsers />} />   
+            <Route path='admin/users/create' element={<CreateUsers />} />
             <Route path='/*' element={<PageNotFound />} />
           </Routes>
         </Router>
