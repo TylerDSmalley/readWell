@@ -58,7 +58,8 @@ function Home() {
                     <Grid container spacing={4}>
                         {listOfBooks.map((value, key) => (
                             <Grid item key={key} xs={12} sm={6} md={4}>
-                                <Button size="small"
+                                <Button
+                                    size="small"
                                     onClick={
                                         () => {
                                             navigate(`/books/byId/${value.id}`)
