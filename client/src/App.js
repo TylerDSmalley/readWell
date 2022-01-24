@@ -35,7 +35,6 @@ import { AuthContext } from "./helpers/AuthContext";
 import { useState, useEffect } from "react";
 import axios from 'axios';
 import Chip from '@mui/material/Chip';
-import SearchBar from "../src/components/SearchBar"
 
 function App() {
   const theme = createTheme();
@@ -46,7 +45,6 @@ function App() {
     role: "",
     status: false,
   });
-  const [listOfBooks, setListOfBooks] = useState([]);
 
   useEffect((authState) => {
     axios
