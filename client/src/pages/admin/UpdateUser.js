@@ -22,7 +22,7 @@ const UpdateUser = () => {
             });
         },[]);
 
-    const initialValues = { firstName: userObject.firstName ? userObject.firstName : "" , lastName: userObject.lastName ? userObject.lastName: "", email: userObject.email ? userObject.email: "",  role: userObject.role ? userObject.role: "" };
+    const initialValues = { firstName: userObject.firstName ? userObject.firstName : "" , lastName: userObject.lastName ? userObject.lastName: "", email: userObject.email ? userObject.email: "",  role: userObject.role ? userObject.role: "", status: userObject.status ? userObject.status: "" };
 
     const validationSchema = Yup.object().shape({
         firstName: Yup.string().required("First Name is required"),
@@ -56,7 +56,7 @@ const UpdateUser = () => {
                         <div><h5>Update User</h5></div>
                         
                         <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema} enableReinitialize={true}>
-                            <Form >
+                            <Form className="form-control">
                                 <label>First Name:&nbsp;</label>
                                 <ErrorMessage name="firstName" component="span" />
                                 <Field name="firstName" /><br />
@@ -75,7 +75,17 @@ const UpdateUser = () => {
                                     <label>
                                         <Field type="radio" name="role" value="admin" />
                                         Admin
-                                    </label></div>
+                                    </label></div><br/>
+                                    <div id="role">User Status:</div>
+                                <div role="group" aria-labelledby="role">
+                                    <label>
+                                        <Field type="radio" name="status" value="active" />
+                                        Active
+                                    </label>
+                                    <label>
+                                        <Field type="radio" name="status" value="inactive" />
+                                        Inactive
+                                    </label></div><br/>
                                 <button type="submit">Update User</button>
                             </Form>
                         </Formik>

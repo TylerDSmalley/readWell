@@ -48,6 +48,7 @@ router.put("/users/update/:userId", async (req, res) => {
         lastName: req.body.lastName,
         email: req.body.email,
         role: req.body.role,
+        status: req.body.status,
     }, { where: {id : req.params.userId} });
     res.json(req.body);
 });
@@ -65,6 +66,7 @@ router.get("/users/byId/:id", async (req, res) => {
 router.post("/books/create", async (req, res) => {
 //router.post("/books/create", validateToken, async (req, res) => {
     const { title, author, summary, genre, datePublished, publisher, isbn, coverPhoto } = req.body;
+    
     await Books.create({
         title: title,
         author: author,
