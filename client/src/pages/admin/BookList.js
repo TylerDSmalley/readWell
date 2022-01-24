@@ -38,11 +38,7 @@ function BookList(){
   };
 
   const editBook = (id) => {
-    axios.delete(`http://localhost:3001/admin/books/update/${id}`, {
-      headers: { accessToken: localStorage.getItem("accessToken") },
-    }).then(() => {
-      window.location.reload(false);
-    });
+    navigate(`../admin/books/update/${id}`);
   };
 
   function createData(id, title, author, summary, genre, datePublished,publisher,isbn) {
