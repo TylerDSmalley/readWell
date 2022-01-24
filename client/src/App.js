@@ -31,6 +31,8 @@ import BookList from './pages/admin/BookList';
 import ReviewList from './pages/admin/ReviewList';
 import AddBook from './pages/admin/AddBook';
 import CreateUsers from './pages/admin/CreateUsers';
+import UpdateBook from './pages/admin/UpdateBook';
+import UpdateUser from './pages/admin/UpdateUser';
 import { AuthContext } from "./helpers/AuthContext";
 import { useState, useEffect } from "react";
 import axios from 'axios';
@@ -224,7 +226,9 @@ function App() {
             <Route path='/shelves/:id' element={<Bookshelf />} />
             <Route path='/review/:bookId/:rowId' element={<Review />} />
             <Route path='/admin/users/list' element={<UserList />} />
+            <Route path='/admin/users/update' element={<UpdateUser />} />
             <Route path='admin/books/list' element={<BookList />} />
+            <Route path='admin/books/update' element={<UpdateBook />} />
             <Route path='admin/reviews/list' element={<ReviewList />} />
             <Route path='admin/books/create' element={<AddBook />} />
             <Route path='admin/users/create' element={<CreateUsers />} />
