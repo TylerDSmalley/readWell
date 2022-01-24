@@ -50,6 +50,15 @@ router.put("/update/:bookId", async (req, res) => {
     res.json(req.body);
 });
 
+//update book by id
+router.put("/ratingupdate/:bookId", async (req, res) => {
+    console.log("IM HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEERE")
+    console.log( req.body)
+    const bookId = req.params.bookId;
+    await Books.update(req.body, { where: {id : bookId} });
+    res.json(req.body);
+});
+
 //delete book by id
 router.delete("/books/delete/:bookId", validateToken, async (req, res) => {
     const bookId = req.params.bookId;
