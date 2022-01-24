@@ -35,6 +35,10 @@ function UserList() {
     });
   };
 
+  const editUser = (id) => {
+    navigate(`../admin/users/update/${id}`);
+  };
+
   function createData(id,firstName, lastName, email, role, isLocal, status) {
     return { id,firstName, lastName, email, role, isLocal, status };
   }
@@ -87,7 +91,7 @@ function UserList() {
               <TableCell align="right">{row.isLocal}</TableCell>
               <TableCell align="right">{row.status}</TableCell>
               <TableCell align="right">
-                <Button className="bg-secondary text-white mx-2" onClick={() => {deleteUser(row.id)}}>Edit!</Button>
+                <Button className="bg-secondary text-white mx-2" onClick={() => {editUser(row.id)}}>Edit!</Button>
                 <Button className="bg-danger text-white" onClick={() => {deleteUser(row.id)}}>Delete</Button>
               </TableCell>
             </TableRow>
