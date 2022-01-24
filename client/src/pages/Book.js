@@ -13,7 +13,6 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../helpers/AuthContext";
-import { useNavigate } from "react-router-dom";
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Snackbar from '@mui/material/Snackbar';
@@ -24,11 +23,9 @@ import moment from "moment";
 
 function Book() {
     let { id } = useParams();
-    let navigate = useNavigate();
     const theme = createTheme();
     const { authState } = useContext(AuthContext)
     const [bookObject, setBookObject] = useState({});
-    const [dupeCheck, setDupeCheck] = useState(false);
     const [listOfReviews, setListOfReviews] = useState([]);
     // const [newReview, setNewReview] = useState("");
     const [ratingValue, setRatingValue] = useState(0);
@@ -59,17 +56,6 @@ function Book() {
 
         setSnackOpen(false);
     };
-
-    const checkDupe = async () => {
-        let userId = authState.id
-        await axios.get(`http://localhost:3001/shelves/dupe/${id}/${userId}`).then((response) => {
-            console.log(response.data.id)
-            if(response.data.id){
-                setDupeCheck(true)
-            }
-            console.log(dupeCheck)
-        });
-    }
 
     const addToRead = () => {
         // console.log(dupeCheck)

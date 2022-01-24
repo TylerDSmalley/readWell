@@ -117,7 +117,8 @@ router.delete("/delete/:shelfId", validateToken, async (req, res) => {
             id: shelfId,
         },
     });
-    res.json("BOOK DELETED");
+    res.json(shelfId);
+    console.log(shelfId)
 })
 
 module.exports = router;

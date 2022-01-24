@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState} from "react";
 import Container from '@mui/material/Container';
 import CardMedia from '@mui/material/CardMedia';
 import Rating from '@mui/material/Rating';
@@ -32,17 +32,14 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
 import Button from '@mui/material/Button';
-import { AuthContext } from "../helpers/AuthContext";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import moment from "moment";
-import Link from '@mui/material/Link';
 import { useNavigate } from "react-router-dom";
 
 function Bookshelf() {
     let navigate = useNavigate();
     let { id } = useParams();
-    const { authState } = useContext(AuthContext)
     const [listOfShelves, setListOfShelves] = useState([]);
     const [currentShelf, setCurrentShelf] = useState("All");
     const [filteredData, setFilteredData] = useState([]);
@@ -96,7 +93,7 @@ function Bookshelf() {
         } else {
             filteredData.slice(0, 15).map((value, key) => {
                 return (
-                    <a className="dataItem" href={`/books/byId/${value.id}`} target="_blank">
+                    <a className="dataItem" href={`/books/byId/${value.id}`} target="_blank" rel="noreferrer">
                         <p>{value.title} </p>
                     </a>
                 );
@@ -420,23 +417,26 @@ function Bookshelf() {
         setSelected(newSelected);
     };
 
+    const getBookShelves = () => {
+        axios.get(`http://localhost:3001/shelves/${id}`).then((response) => {
+                setListOfShelves(response.data);
+                setFilteredData(response.data);
+            });
+    }
+
     const handleDelete = () => {
         selected.map((shelfId) => (
 
             axios.delete(`http://localhost:3001/shelves/delete/${shelfId}`, {
                 headers: { accessToken: localStorage.getItem("accessToken") }
             }).then(() => {
+                getBookShelves();
+
                 setSelected(
                     selected.filter((val) => {
                         return val.id !== shelfId;
                     })
-                )
-
-                setListOfShelves(
-                    listOfShelves.filter((val) => {
-                        return val.id !== shelfId;
-                    })
-                )
+                );
             })
         ));
     }
@@ -472,13 +472,7 @@ function Bookshelf() {
                             >
                                 My Books:
                             </Typography>
-
-
-
                             <TableSearch />
-
-
-
                         </Toolbar>
                         <Divider />
                         <Box sx={{ display: 'flex', minHeight: "100vh" }} maxWidth={"100%"}>

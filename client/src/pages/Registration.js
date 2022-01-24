@@ -23,19 +23,6 @@ function Registration() {
     let navigate = useNavigate();
     const theme = createTheme();
 
-    function Copyright(props) {
-        return (
-            <Typography variant="body2" color="text.secondary" align="center" {...props}>
-                {'Copyright © '}
-                <Link color="inherit" href="#">
-                    Team IT
-                </Link>{' '}
-                {new Date().getFullYear()}
-                {'.'}
-            </Typography>
-        );
-    }
-
     const initialValues = {
         firstName: "",
         lastName: "",
@@ -131,6 +118,15 @@ function Registration() {
                                                     name="password"
                                                 />
                                                 <ErrorMessage name="password" component="span" />
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                                <label>Confirm Password: </label>
+                                                <Field
+                                                    type="password"
+                                                    className="form-control"
+                                                    name="passwordConfirmation"
+                                                />
+                                                <ErrorMessage name="passwordConfirmation" component="span" />
                                             </Grid>
                                             <Grid item xs={12}>
 

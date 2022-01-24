@@ -33,7 +33,12 @@ function BookList(){
     axios.delete(`http://localhost:3001/admin/books/delete/${id}`, {
       headers: { accessToken: localStorage.getItem("accessToken") },
     }).then(() => {
-      window.location.reload(false);
+      setListOfBooks(
+        listOfBooks.filter((val) => {
+            return val.id !== id;
+        })
+      );
+      // window.location.reload(false);
     });
   };
 

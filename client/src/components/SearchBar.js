@@ -43,11 +43,11 @@ export function SearchBar({ placeholder, data }) {
           )}
         </div>
       </div>
-      {filteredData.length != 0 && (
+      {filteredData.length !== 0 && (
         <div className="dataResult p-3">
           {filteredData.slice(0, 15).map((value, key) => {
             return (
-              <a className="dataItem" href={`/books/byId/${value.id}`} target="_blank">
+              <a className="dataItem" href={`/books/byId/${value.id}`} target="_blank" rel="noreferrer">
                 <p>{value.title} </p>
               </a>
             );

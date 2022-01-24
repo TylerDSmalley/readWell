@@ -19,7 +19,6 @@ import { useParams } from "react-router-dom";
 function Review() {
   const [bookObject, setBookObject] = useState({});
   const [personalRating, setPersonalRating] = useState(0);
-  const [personalReview, setPersonalReview] = useState("");
   const [aggRating, setAggRating] = useState(0);
   const theme = createTheme();
   const { authState } = useContext(AuthContext)
@@ -39,7 +38,7 @@ function Review() {
         setPersonalRating(response.data.personalRating);
       });
     }
-  }, []);
+  }, [bookId,rowId]);
 
   const changeRating = (newRating) => {
     let data = { personalRating: newRating }
@@ -50,7 +49,7 @@ function Review() {
     }).then((response) => {
       setPersonalRating(parseInt(response.data));
       let checkAgg = parseInt(aggRating);
-      if (checkAgg == 0) {
+      if (checkAgg === 0) {
         saveAggRating(newRating);
       } else {
         calculateAggRating();

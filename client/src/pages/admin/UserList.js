@@ -31,7 +31,8 @@ function UserList() {
     axios.put(`http://localhost:3001/admin/users/delete/${id}`, {
       headers: { accessToken: localStorage.getItem("accessToken") },
     }).then(() => {
-      window.location.reload(false);
+      // setListOfUsers(listOfUsers);
+      window.location.reload();
     });
   };
 
@@ -92,7 +93,7 @@ function UserList() {
               <TableCell align="right">{row.status}</TableCell>
               <TableCell align="right">
                 <Button className="bg-secondary text-white mx-2" onClick={() => {editUser(row.id)}}>Edit!</Button>
-                <Button className="bg-danger text-white" onClick={() => {deleteUser(row.id)}}>Delete</Button>
+                {row.status == 'active' && <Button className="bg-danger text-white" onClick={() => { deleteUser(row.id) }}>Delete</Button>}
               </TableCell>
             </TableRow>
           ))}
