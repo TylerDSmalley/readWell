@@ -13,6 +13,7 @@ import ListItemText from '@mui/material/ListItemText';
 import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
+import CloseIcon from "@material-ui/icons/Close";
 import { styled, alpha } from '@mui/material/styles';
 import PropTypes from 'prop-types';
 import Table from '@mui/material/Table';
@@ -30,7 +31,6 @@ import Tooltip from '@mui/material/Tooltip';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
-import { height } from '@mui/system';
 import Button from '@mui/material/Button';
 import { AuthContext } from "../helpers/AuthContext";
 import axios from "axios";
@@ -44,37 +44,71 @@ function Bookshelf() {
     let { id } = useParams();
     const { authState } = useContext(AuthContext)
     const [listOfShelves, setListOfShelves] = useState([]);
-    const [personalRating, setPersonalRating] = useState([]);
-    const [booksToDelete, setBooksToDelete] = useState([]);
+    const [currentShelf, setCurrentShelf] = useState("All");
+    const [filteredData, setFilteredData] = useState([]);
 
     useEffect(() => {
-        axios.get(`http://localhost:3001/shelves/${id}`).then((response) => {
-            setListOfShelves(response.data);
-            setPersonalRating(response.data.rating);
-            console.log(listOfShelves)
-        });
+        if (!localStorage.getItem("accessToken")) {
+            navigate("/login");
+        } else {
+            axios.get(`http://localhost:3001/shelves/${id}`).then((response) => {
+                setListOfShelves(response.data);
+                setFilteredData(response.data);
+            });
+        }
     }, [id]);
 
     const changeShelf = (shelf) => {
         if (shelf === "All") {
-            console.log(shelf)
+            setCurrentShelf(shelf)
             axios.get(`http://localhost:3001/shelves/${id}`).then((response) => {
                 setListOfShelves(response.data);
-                setPersonalRating(response.data.rating);
+                setFilteredData(response.data);
             });
         } else if (shelf === "Want to read") {
+            setCurrentShelf(shelf)
             shelf = "want"
             axios.get(`http://localhost:3001/shelves/userrows/${id}/${shelf}`).then((response) => {
                 setListOfShelves(response.data);
-                setPersonalRating(response.data.rating);
+                setFilteredData(response.data);
             });
         } else {
+            setCurrentShelf(shelf)
             axios.get(`http://localhost:3001/shelves/userrows/${id}/${shelf}`).then((response) => {
                 setListOfShelves(response.data);
-                setPersonalRating(response.data.rating);
+                setFilteredData(response.data);
             });
         }
     }
+
+    const [wordEntered, setWordEntered] = useState("");
+    const handleFilter = (event) => {
+        const searchWord = event.target.value;
+        setWordEntered(searchWord);
+        const newFilter = filteredData.filter((value) => {
+            return value.Book.title.toLowerCase().includes(searchWord.toLowerCase()) ||
+                value.Book.author.toLowerCase().includes(searchWord.toLowerCase());
+
+        });
+
+        if (searchWord === "") {
+            setFilteredData(listOfShelves);
+        } else {
+            filteredData.slice(0, 15).map((value, key) => {
+                return (
+                    <a className="dataItem" href={`/books/byId/${value.id}`} target="_blank">
+                        <p>{value.title} </p>
+                    </a>
+                );
+            })
+            setFilteredData(newFilter);
+        }
+    };
+
+    const clearInput = () => {
+        setFilteredData(listOfShelves);
+        setWordEntered("");
+    };
 
     const Search = styled('div')(({ theme }) => ({
         position: 'relative',
@@ -118,6 +152,31 @@ function Bookshelf() {
         },
     }));
 
+    function TableSearch() {
+        return (
+            <>
+                <Search>
+                    <SearchIconWrapper>
+                        <SearchIcon />
+                    </SearchIconWrapper>
+                    <StyledInputBase
+                        value={wordEntered}
+                        onChange={handleFilter}
+                        placeholder="Search…"
+                        inputProps={{ 'aria-label': 'search' }}
+                    />
+                </Search>
+                <div className="searchIcon">
+                    {filteredData.length === listOfShelves.length ? (
+                        <></>
+                    ) : (
+                        <CloseIcon id="clearBtn" onClick={clearInput} />
+                    )}
+                </div>
+            </>
+        );
+    }
+
     function createData(id, coverPhoto, title, author, rating, personalRating, shelf, createdAt, bookId) {
         return {
             id,
@@ -132,7 +191,7 @@ function Bookshelf() {
         };
     }
 
-    const rows = listOfShelves.map((value) => (
+    const rows = filteredData.map((value) => (
         createData(value.id, value.Book.coverPhoto, value.Book.title, value.Book.author, value.Book.rating, value.personalRating, value.shelf, value.createdAt, value.Book.id)
     ))
 
@@ -295,7 +354,7 @@ function Bookshelf() {
                         id="tableTitle"
                         component="div"
                     >
-                        Read
+                        {currentShelf}
                     </Typography>
                 )}
 
@@ -321,7 +380,7 @@ function Bookshelf() {
     };
 
     const [order, setOrder] = React.useState('asc');
-    const [orderBy, setOrderBy] = React.useState('calories');
+    const [orderBy, setOrderBy] = React.useState('title');
     const [selected, setSelected] = React.useState([]);
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -398,8 +457,6 @@ function Bookshelf() {
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
-
-
     return (
         <main className="w-100">
             <Container sx={{ minHeight: "100vh", maxWidth: '100%' }}>
@@ -416,15 +473,13 @@ function Bookshelf() {
                             >
                                 My Books:
                             </Typography>
-                            <Search>
-                                <SearchIconWrapper>
-                                    <SearchIcon />
-                                </SearchIconWrapper>
-                                <StyledInputBase
-                                    placeholder="Search…"
-                                    inputProps={{ 'aria-label': 'search' }}
-                                />
-                            </Search>
+
+
+
+                            <TableSearch />
+
+
+
                         </Toolbar>
                         <Divider />
                         <Box sx={{ display: 'flex', minHeight: "100vh" }} maxWidth={"100%"}>
@@ -509,7 +564,16 @@ function Bookshelf() {
                                                                         alt="random"
                                                                     />
                                                                 </TableCell>
-                                                                <TableCell align="left">{row.title}</TableCell>
+                                                                <TableCell align="left">
+                                                                    <Button
+                                                                        size="small"
+                                                                        onClick={
+                                                                            () => {
+                                                                                navigate(`/books/byId/${row.bookId}`)
+                                                                            }
+                                                                        }
+                                                                    >{row.title}</Button>
+                                                                </TableCell>
                                                                 <TableCell align="left">{row.author}</TableCell>
                                                                 <TableCell align="left">{row.rating}</TableCell>
                                                                 <TableCell align="left">
