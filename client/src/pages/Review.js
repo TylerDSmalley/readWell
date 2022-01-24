@@ -48,31 +48,20 @@ function Review() {
     axios.put(`http://localhost:3001/shelves/rate/${rowId}`, data, {
       headers: { accessToken: localStorage.getItem("accessToken") },
     }).then((response) => {
-      console.log("PUT RESPONSE")
-      console.log(response.data);
       setPersonalRating(parseInt(response.data));
-      console.log("PERSONAL Rating: ")
-      console.log(personalRating);
+      let checkAgg = parseInt(aggRating);
+      if (checkAgg == 0) {
+        saveAggRating(newRating);
+      } else {
+        calculateAggRating();
+      }
     });
-    
-    let checkAgg = parseInt(aggRating);
-    if (checkAgg == 0) {
-      console.log("Brand new rating")
-      saveAggRating(newRating);
-    } else {
-      console.log("There is already a rating")
-      calculateAggRating();
-    }
   };
 
   const calculateAggRating = () => {
     axios.get(`http://localhost:3001/shelves/allratings/${bookId}`).then((response) => {
       let ratingsList = new Array(response.data)
-      console.log("ratings list :")
-      console.log(ratingsList)
       let ratingsCount = ratingsList[0].count;
-      console.log("ratings list :")
-      console.log(ratingsCount)
       let ratingsTotal = 0;
 
       //NEED TO CHECK FOR MORE THAN ONE RECORD HERE
@@ -80,23 +69,16 @@ function Review() {
       ratingsList[0].rows.map((value) => (
         ratingsTotal = ratingsTotal + value.personalRating
       ))
-      console.log("Ratings total: ")
-      console.log(ratingsTotal)
       let newAggRating = ratingsTotal / ratingsCount;
-      
-      console.log("New average : ")
-      console.log(newAggRating)
       setAggRating(newAggRating)
       saveAggRating(newAggRating);
     });
   };
 
   const saveAggRating = (newAggRating) => {
-    let data = {rating: newAggRating};
+    let data = { rating: newAggRating };
     axios.put(`http://localhost:3001/books/ratingupdate/${bookId}`, data).then((response) => {
-      console.log(response.data.rating)
       setAggRating(response.data.rating)
-      console.log(aggRating)
     });
   };
 
