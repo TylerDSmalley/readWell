@@ -28,6 +28,7 @@ function Book() {
     const theme = createTheme();
     const { authState } = useContext(AuthContext)
     const [bookObject, setBookObject] = useState({});
+    const [dupeCheck, setDupeCheck] = useState(false);
     const [listOfReviews, setListOfReviews] = useState([]);
     // const [newReview, setNewReview] = useState("");
     const [ratingValue, setRatingValue] = useState(0);
@@ -59,7 +60,21 @@ function Book() {
         setSnackOpen(false);
     };
 
+    const checkDupe = async () => {
+        let userId = authState.id
+        await axios.get(`http://localhost:3001/shelves/dupe/${id}/${userId}`).then((response) => {
+            console.log(response.data.id)
+            if(response.data.id){
+                setDupeCheck(true)
+            }
+            console.log(dupeCheck)
+        });
+    }
+
     const addToRead = () => {
+        // console.log(dupeCheck)
+        // checkDupe();
+        // console.log(dupeCheck)
         axios.post(`http://localhost:3001/shelves`, {
             shelf: "read",
             BookId: id,

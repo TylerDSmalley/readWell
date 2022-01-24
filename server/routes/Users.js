@@ -38,7 +38,13 @@ router.post("/login", async (req, res) => {
                 isLocal: "no",
             })
         } else {
-            const currUser = await Users.update({ firstName: req.body.firstName, lastName: req.body.lastName }, { where: { email: email } })
+            const currUser = await Users.update({ 
+                firstName: req.body.firstName, 
+                lastName: req.body.lastName 
+            }, 
+            { where: 
+                { email: email } 
+            })
         }
 
         const user = await Users.findOne({ where: { email: email } });

@@ -8,13 +8,42 @@ const { validateToken } = require("../middlewares/AuthMiddleware");
 
 //add book to shelf
 router.post("/", validateToken, async (req, res) => {
-    const {shelf, BookId, UserId} = req.body;
-    await Bookshelves.create({
-        shelf: shelf,
-        BookId: BookId,
-        UserId: UserId,
-    });
+    const { shelf, BookId, UserId } = req.body;
+    const dupeCheck = await Bookshelves.findOne({ where: { BookId: BookId, UserId: UserId } });
+
+    if (!dupeCheck) {
+        await Bookshelves.create({
+            shelf: shelf,
+            BookId: BookId,
+            UserId: UserId,
+        });
+    } else {
+        await Bookshelves.update({
+            shelf: shelf,
+        },
+            {
+                where: {
+                    BookId: BookId,
+                    UserId: UserId
+                }
+            })
+            res.json("success")
+    }
+
+
     res.json("BOOK ADDED TO SHELF");
+});
+
+//get dupe check
+router.get("/dupe/:bookId/:userId", async (req, res) => {
+    console.log(req.body)
+    const bookShelf = await Bookshelves.findOne({
+        where: {
+            UserId: req.params.userId,
+            BookId: req.params.bookId
+        }
+    });
+    res.json(bookShelf);
 });
 
 //get all Bookshelves by id
@@ -22,7 +51,7 @@ router.get("/:id", async (req, res) => {
     const userId = req.params.id;
     const listOfBookshelves = await Bookshelves.findAll({
         where: {
-            UserId: userId, 
+            UserId: userId,
         },
         include: [Books]
     });
@@ -66,26 +95,19 @@ router.put("/rate/:rowId", async (req, res) => {
     const rowId = req.params.rowId;
     await Bookshelves.update({
         personalRating: req.body.personalRating
-        }, 
-        { where: {id : rowId} });
-        res.json(req.body.personalRating);
-    });
+    },
+        { where: { id: rowId } });
+    res.json(req.body.personalRating);
+});
 
 
-// //update book by id
-// router.put("/update/:bookId", async (req, res) => {
-//     await Bookshelves.update({
-//         title: req.body.title,
-//         author: req.body.author,
-//         summary: req.body.summary,
-//         genre: req.body.genre,
-//         datePublished: req.body.datePublished,
-//         publisher: req.body.publisher,
-//         isbn: req.body.isbn,
-//         coverPhoto: req.body.coverPhoto,
-//     }, { where: {id : req.body.id} });
-//     res.json(req.body);
-// });
+//update book by id
+router.put("/update/:bookId", async (req, res) => {
+    await Bookshelves.update({
+        shelf: req.body.shelf
+    }, { where: { id: req.body.id } });
+    res.json(req.body);
+});
 
 //delete book from shelf by id
 router.delete("/delete/:shelfId", validateToken, async (req, res) => {
