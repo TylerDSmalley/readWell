@@ -30,6 +30,18 @@ router.get("/:id", async (req, res) => {
     res.json(listOfBookshelves);
 });
 
+//get personal rating total by bookId
+router.get("/allratings/:bookId", async (req, res) => {
+    const bookId = req.params.bookId;
+    const listOfPersonalRatings = await Bookshelves.findAndCountAll({
+        attributes: ['personalRating'],
+        where: {
+            BookId: bookId
+        }
+    });
+    res.json(listOfPersonalRatings);
+});
+
 //get all Bookshelves by id and shelf name
 router.get("/userrows/:id/:shelf", async (req, res) => {
     const userId = req.params.id;
@@ -47,8 +59,6 @@ router.get("/userrows/:id/:shelf", async (req, res) => {
 //get shelf row by id
 router.get("/row/:rowId", async (req, res) => {
     const rowId = req.params.rowId;
-    console.log(rowId)
-    console.log("ASDFASDFSDAFSADFSADFSADFD")
     const shelfRow = await Bookshelves.findByPk(rowId)
     res.json(shelfRow);
 });
