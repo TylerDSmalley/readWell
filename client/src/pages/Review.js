@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Grid from '@mui/material/Grid';
-import Divider from '@mui/material/Divider';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Stack from '@mui/material/Stack';
@@ -21,6 +20,7 @@ function Review() {
   const [bookObject, setBookObject] = useState({});
   const [personalRating, setPersonalRating] = useState(0);
   const [personalReview, setPersonalReview] = useState("");
+  const [aggRating, setAggRating] = useState(0);
   const theme = createTheme();
   const { authState } = useContext(AuthContext)
   let { bookId, rowId } = useParams();
@@ -32,22 +32,71 @@ function Review() {
     } else {
       axios.get(`http://localhost:3001/books/byId/${bookId}`).then((response) => {
         setBookObject(response.data);
+        setAggRating(response.data.rating);
       });
 
       axios.get(`http://localhost:3001/shelves/row/${rowId}`).then((response) => {
         setPersonalRating(response.data.personalRating);
       });
-
     }
   }, []);
 
   const changeRating = (newRating) => {
-    let data = {personalRating: newRating}
-    console.log(data)
+    let data = { personalRating: newRating }
+
+    //Adds new personal rating when clicked
     axios.put(`http://localhost:3001/shelves/rate/${rowId}`, data, {
       headers: { accessToken: localStorage.getItem("accessToken") },
     }).then((response) => {
-      setPersonalRating(newRating);
+      console.log("PUT RESPONSE")
+      console.log(response.data);
+      setPersonalRating(parseInt(response.data));
+      console.log("PERSONAL Rating: ")
+      console.log(personalRating);
+    });
+    
+    let checkAgg = parseInt(aggRating);
+    if (checkAgg == 0) {
+      console.log("Brand new rating")
+      saveAggRating(newRating);
+    } else {
+      console.log("There is already a rating")
+      calculateAggRating();
+    }
+  };
+
+  const calculateAggRating = () => {
+    axios.get(`http://localhost:3001/shelves/allratings/${bookId}`).then((response) => {
+      let ratingsList = new Array(response.data)
+      console.log("ratings list :")
+      console.log(ratingsList)
+      let ratingsCount = ratingsList[0].count;
+      console.log("ratings list :")
+      console.log(ratingsCount)
+      let ratingsTotal = 0;
+
+      //NEED TO CHECK FOR MORE THAN ONE RECORD HERE
+
+      ratingsList[0].rows.map((value) => (
+        ratingsTotal = ratingsTotal + value.personalRating
+      ))
+      console.log("Ratings total: ")
+      console.log(ratingsTotal)
+      let newAggRating = ratingsTotal / ratingsCount;
+      
+      console.log("New average : ")
+      console.log(newAggRating)
+      setAggRating(newAggRating)
+      saveAggRating(newAggRating);
+    });
+  };
+
+  const saveAggRating = (newAggRating) => {
+    let data = {rating: newAggRating};
+    axios.put(`http://localhost:3001/books/ratingupdate/${bookId}`, data).then((response) => {
+      console.log(response.data.rating)
+      setAggRating(response.data.rating)
+      console.log(aggRating)
     });
   };
 
