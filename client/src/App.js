@@ -115,6 +115,7 @@ function App() {
                       <Link to="/login"> Login</Link>
                     </>
                   ) : (
+
                     <div>
                       <IconButton
                         size="large"
@@ -126,32 +127,63 @@ function App() {
                       >
                         <AccountCircle />
                       </IconButton>
-                      <Menu
-                        id="menu-appbar"
-                        anchorEl={anchorEl}
-                        anchorOrigin={{
-                          vertical: 'top',
-                          horizontal: 'right',
-                        }}
-                        keepMounted
-                        transformOrigin={{
-                          vertical: 'top',
-                          horizontal: 'right',
-                        }}
-                        open={Boolean(anchorEl)}
-                        onClose={handleClose}
-                      >
-                        <MenuItem className='mx-3 my-2' >
-                          {authState.email}
-                        </MenuItem>
-                        <Divider color="text.secondary" className="mt-3 mb3"><Chip label="User Menu" /></Divider>
-                        <MenuItem className='my-3'>
-                          <Link to={{ pathname: `/shelves/${authState.id}` }}>
-                            Bookshelves
-                          </Link>
-                        </MenuItem>
-                        {authState.role === "admin" &&
-                          <>
+
+                      {!authState.role === "admin" ? (
+                        <>
+                        <Menu
+                            id="menu-appbar"
+                            anchorEl={anchorEl}
+                            anchorOrigin={{
+                              vertical: 'top',
+                              horizontal: 'right',
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                              vertical: 'top',
+                              horizontal: 'right',
+                            }}
+                            open={Boolean(anchorEl)}
+                            onClose={handleClose}
+                          >
+                            <MenuItem className='mx-3 my-2' >
+                              {authState.email}
+                            </MenuItem>
+                            <Divider color="text.secondary" className="mt-3 mb3"><Chip label="User Menu" /></Divider>
+                            <MenuItem className='my-3'>
+                              <Link to={{ pathname: `/shelves/${authState.id}` }}>
+                                Bookshelves
+                              </Link>
+                            </MenuItem>
+                            <Divider color="text.secondary" className="mt-3 mb3"></Divider>
+                            <MenuItem onClick={logout}>Logout</MenuItem>
+                          </Menu>
+                        </>
+                      ) : (
+                        <>
+                          <Menu
+                            id="menu-appbar"
+                            anchorEl={anchorEl}
+                            anchorOrigin={{
+                              vertical: 'top',
+                              horizontal: 'right',
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                              vertical: 'top',
+                              horizontal: 'right',
+                            }}
+                            open={Boolean(anchorEl)}
+                            onClose={handleClose}
+                          >
+                            <MenuItem className='mx-3 my-2' >
+                              {authState.email}
+                            </MenuItem>
+                            <Divider color="text.secondary" className="mt-3 mb3"><Chip label="User Menu" /></Divider>
+                            <MenuItem className='my-3'>
+                              <Link to={{ pathname: `/shelves/${authState.id}` }}>
+                                Bookshelves
+                              </Link>
+                            </MenuItem>
                             <Divider color="text.secondary" className="mt-3 mb3"><Chip label="Admin" /></Divider>
                             <MenuItem className='mb-1' >
                               <Link to="/admin/users/list"> User List</Link>
@@ -168,11 +200,12 @@ function App() {
                             <MenuItem className='mb-1'>
                               <Link to="/admin/reviews/list">Review List</Link>
                             </MenuItem>
-                          </>
-                        }
-                        <Divider color="text.secondary" className="mt-3 mb3"></Divider>
-                        <MenuItem onClick={logout}>Logout</MenuItem>
-                      </Menu>
+                            <Divider color="text.secondary" className="mt-3 mb3"></Divider>
+                            <MenuItem onClick={logout}>Logout</MenuItem>
+                          </Menu>
+                        </>
+                      )}
+
                     </div>
                   )}
                 </Typography>
