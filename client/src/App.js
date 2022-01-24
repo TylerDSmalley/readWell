@@ -226,9 +226,9 @@ function App() {
             <Route path='/shelves/:id' element={<Bookshelf />} />
             <Route path='/review/:bookId/:rowId' element={<Review />} />
             <Route path='/admin/users/list' element={<UserList />} />
-            <Route path='/admin/users/update' element={<UpdateUser />} />
+            <Route path='/admin/users/update/:id' element={<UpdateUser />} />
             <Route path='admin/books/list' element={<BookList />} />
-            <Route path='admin/books/update' element={<UpdateBook />} />
+            <Route path='admin/books/update/:id' element={<UpdateBook />} />
             <Route path='admin/reviews/list' element={<ReviewList />} />
             <Route path='admin/books/create' element={<AddBook />} />
             <Route path='admin/users/create' element={<CreateUsers />} />
