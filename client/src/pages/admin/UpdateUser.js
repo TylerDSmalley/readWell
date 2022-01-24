@@ -19,7 +19,6 @@ const UpdateUser = () => {
     useEffect(() => {
         axios.get(`http://localhost:3001/admin/users/byId/${id}`).then((response) => {
             setUserObject(response.data);
-            console.log(userObject)
             });
         },[]);
 
@@ -32,7 +31,6 @@ const UpdateUser = () => {
     });
 
     const onSubmit = (data) => {
-        console.log(data);
         axios.put(`http://localhost:3001/admin/users/update/${id}`, data).then((response) => {
             navigate("/admin/users/list");
         });

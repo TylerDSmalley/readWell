@@ -8,7 +8,6 @@ const { validateToken } = require("../middlewares/AuthMiddleware");
 
 //add book to shelf
 router.post("/", validateToken, async (req, res) => {
-    console.log(req.body);
     const {shelf, BookId, UserId} = req.body;
     await Bookshelves.create({
         shelf: shelf,

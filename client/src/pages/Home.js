@@ -23,7 +23,6 @@ function Home() {
             "http://localhost:3001/books",
         ).then((response) => {
             setListOfBooks(response.data);
-            console.log(response.data)
         });
     }, []);
 

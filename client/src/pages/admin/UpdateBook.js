@@ -35,7 +35,6 @@ const UpdateBook = () => {
 
     const onSubmit = (data) => {
         //data.coverPhoto = `https://readwell.s3.ca-central-1.amazonaws.com/${selectedFile.name}`;
-        console.log(data);
         axios.put(`http://localhost:3001/admin/books/update/${id}`, data).then((response) => {
             navigate("/admin/books/list");
         });

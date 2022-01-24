@@ -22,7 +22,6 @@ function CreateUsers() {
     });
 
     const onSubmit = (data) => {
-        console.log(data)
         axios.post("http://localhost:3001/admin/users/create", data).then((response) => {
             navigate("/admin/users/list");
         });

@@ -64,7 +64,6 @@ router.get("/users/byId/:id", async (req, res) => {
 //create book
 router.post("/books/create", async (req, res) => {
 //router.post("/books/create", validateToken, async (req, res) => {
-    console.log(req.body);
     const { title, author, summary, genre, datePublished, publisher, isbn, coverPhoto } = req.body;
     await Books.create({
         title: title,

@@ -418,7 +418,6 @@ function Bookshelf() {
         }
 
         setSelected(newSelected);
-        console.log(newSelected);
     };
 
     const handleDelete = () => {

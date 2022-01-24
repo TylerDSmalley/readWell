@@ -136,8 +136,6 @@ function Book() {
         });
     }, [id]);
 
-    console.log(listOfReviews)
-
     // const addReview = () => {
     //     axios.post("http://localhost:3001/reviews", {
     //         summary: newReview,

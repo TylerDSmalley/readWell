@@ -8,7 +8,6 @@ const { validateToken } = require("../middlewares/AuthMiddleware");
 
 //add book
 router.post("/", validateToken, async (req, res) => {
-    console.log(req.body);
     const { title, author, summary, genre, datePublished, publisher, isbn, coverPhoto } = req.body;
     await Books.create({
         title: title,
@@ -52,8 +51,6 @@ router.put("/update/:bookId", async (req, res) => {
 
 //update book by id
 router.put("/ratingupdate/:bookId", async (req, res) => {
-    console.log("IM HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEERE")
-    console.log( req.body)
     const bookId = req.params.bookId;
     await Books.update(req.body, { where: {id : bookId} });
     res.json(req.body);

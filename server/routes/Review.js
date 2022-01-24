@@ -4,7 +4,6 @@ const { Bookshelves, Books, Reviews, Users } = require("../models");
 const { validateToken } = require("../middlewares/AuthMiddleware");
 
 router.post("/", validateToken, async (req, res) => {
-    console.log(req.body);
     await Reviews.create({
         summary: req.body.summary,
         BookId: req.body.BookId,

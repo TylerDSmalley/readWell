@@ -10,7 +10,6 @@ const client = new OAuth2Client("413254531245-7ol21fbdp7k43o4pbdm8k0k3ip2bee07.a
 
 //USER ROUTES-------------------------
 router.post("/", async (req, res) => {
-    console.log(req.body);
     const { firstName, lastName, email, password, isLocal } = req.body;
     bcrypt.hash(password, 10).then((hash) => {
         Users.create({
@@ -73,7 +72,6 @@ router.post("/login", async (req, res) => {
 
 router.get("/auth", validateToken, (req, res) => {
     res.json(req.user);
-    console.log(req.user)
 });
 
 router.put("/changepassword", validateToken, async (req, res) => {
