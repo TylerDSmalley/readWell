@@ -224,7 +224,7 @@ function App() {
             <Route path='/' element={<Home />} />
             <Route path='/books/byId/:id' element={<Book />} />
             <Route path='/shelves/:id' element={<Bookshelf />} />
-            <Route path='/review/:bookId/:rowId' element={<Review />} />
+            <Route path='/review/:bookId/:rowId/:userId' element={<Review />} />
             <Route path='/admin/users/list' element={<UserList />} />
             <Route path='/admin/users/update/:id' element={<UpdateUser />} />
             <Route path='admin/books/list' element={<BookList />} />

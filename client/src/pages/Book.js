@@ -132,7 +132,7 @@ function Book() {
             setRatingValue(response.data.rating);
         });
 
-        axios.get(`http://localhost:3001/review/${id}`).then((response) => {
+        axios.get(`http://localhost:3001/review/list/${id}`).then((response) => {
             setListOfReviews(response.data);
         });
     }, [id]);

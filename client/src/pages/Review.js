@@ -18,11 +18,12 @@ import { useParams } from "react-router-dom";
 
 function Review() {
   const [bookObject, setBookObject] = useState({});
+  const [reviewObject, setReviewObject] = useState({}); 
   const [personalRating, setPersonalRating] = useState(0);
   const [aggRating, setAggRating] = useState(0);
   const theme = createTheme();
   const { authState } = useContext(AuthContext)
-  let { bookId, rowId } = useParams();
+  let { bookId, rowId, userId } = useParams();
   let navigate = useNavigate();
 
   useEffect(() => {
@@ -37,12 +38,16 @@ function Review() {
       axios.get(`http://localhost:3001/shelves/row/${rowId}`).then((response) => {
         setPersonalRating(response.data.personalRating);
       });
+
+      axios.get(`http://localhost:3001/review/userreview/${userId}/${bookId}`).then((response) => {
+        setReviewObject(response.data);
+      });
     }
   }, [bookId,rowId]);
 
   const changeRating = (newRating) => {
     let data = { personalRating: newRating }
-
+    console.log(reviewObject);
     //Adds new personal rating when clicked
     axios.put(`http://localhost:3001/shelves/rate/${rowId}`, data, {
       headers: { accessToken: localStorage.getItem("accessToken") },
@@ -81,8 +86,8 @@ function Review() {
     });
   };
 
-  const initialValues = {
-    summary: "",
+  const initialValues = { 
+    summary: reviewObject.summary ? reviewObject.summary : ""
   };
 
   const validationSchema = Yup.object().shape({
@@ -166,7 +171,7 @@ function Review() {
               </Grid>
             </Grid>
 
-            <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
+            <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema} enableReinitialize={true}>
               <Form className='d-flex flex-column  mb-3 w-100 align-items-start'>
                 <label>Review </label>
                 <Field

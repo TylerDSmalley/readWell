@@ -517,7 +517,7 @@ function Bookshelf() {
                                                 {rows.slice().sort(getComparator(order, orderBy))
                                                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                                     .map((row) => {
-                                                        let reviewPath = `/review/${row.bookId}/${row.id}`;
+                                                        let reviewPath = `/review/${row.bookId}/${row.id}/${id}`;
                                                         const isItemSelected = isSelected(row.id);
                                                         const labelId = `enhanced-table-checkbox-${row.id}`;
                                                         return (
