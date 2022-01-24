@@ -20,6 +20,25 @@ router.post("/", async (req, res) => {
             isLocal: isLocal,
         });
         res.json("USER CREATED");
+        const sgMail = require('@sendgrid/mail')
+        sgMail.setApiKey("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")
+        const msg = {
+        to: req.body.email, // Change to your recipient
+        from: 'itemsfsd01@gmail.com', // Change to your verified sender
+        templateId: 'd-0aaf5f285705465f94305c9cf21a8f9f',
+        dynamicTemplateData: {
+            subject: 'Welcome to ReadWell',
+            firstName: req.body.firstName
+        }
+    };
+sgMail
+  .send(msg)
+  .then(() => {
+    console.log('Email sent')
+  })
+  .catch((error) => {
+    console.error(error)
+  })
     });
 });
 
