@@ -10,6 +10,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from "axios";
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom";
+import { SearchBar } from "../components/SearchBar";
 
 function Home() {
 
@@ -30,6 +31,9 @@ function Home() {
         <ThemeProvider theme={theme}>
             <CssBaseline />
             <main className="w-100">
+                <Container sx={{ minHeight: "fit-content"}} maxWidth="sm" className='contentBox rounded-3'>
+                <SearchBar placeholder={"Search Titles"} data={listOfBooks}></SearchBar>
+                </Container>
                 <Container sx={{ py: 8, my: 5, minHeight: "100vh" }} maxWidth="md" className='contentBox rounded-3'>
                     <Typography
                         component="h1"

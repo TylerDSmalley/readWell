@@ -126,6 +126,7 @@ function Registration() {
                                             <Grid item xs={12}>
                                                 <label>Password: </label>
                                                 <Field
+                                                    type="password"
                                                     className="form-control"
                                                     name="password"
                                                 />

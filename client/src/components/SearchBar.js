@@ -3,7 +3,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import CloseIcon from "@material-ui/icons/Close";
 import "./SearchBar.css";
 
-function SearchBar({ placeholder, data }) {
+export function SearchBar({ placeholder, data }) {
   const [filteredData, setFilteredData] = useState([]);
   const [wordEntered, setWordEntered] = useState("");
 
@@ -44,7 +44,7 @@ function SearchBar({ placeholder, data }) {
         </div>
       </div>
       {filteredData.length != 0 && (
-        <div className="dataResult">
+        <div className="dataResult p-3">
           {filteredData.slice(0, 15).map((value, key) => {
             return (
               <a className="dataItem" href={`/books/byId/${value.id}`} target="_blank">
@@ -58,4 +58,3 @@ function SearchBar({ placeholder, data }) {
   );
 }
 
-export default SearchBar;
