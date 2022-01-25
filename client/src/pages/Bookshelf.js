@@ -41,8 +41,8 @@ function Bookshelf() {
     let navigate = useNavigate();
     let { id } = useParams();
     const [listOfShelves, setListOfShelves] = useState([]);
-    const [currentShelf, setCurrentShelf] = useState("All");
     const [filteredData, setFilteredData] = useState([]);
+    const [currentShelf, setCurrentShelf] = useState("All");
 
     useEffect(() => {
         if (!localStorage.getItem("accessToken")) {
@@ -85,19 +85,11 @@ function Bookshelf() {
         const newFilter = filteredData.filter((value) => {
             return value.Book.title.toLowerCase().includes(searchWord.toLowerCase()) ||
                 value.Book.author.toLowerCase().includes(searchWord.toLowerCase());
-
         });
 
         if (searchWord === "") {
             setFilteredData(listOfShelves);
         } else {
-            filteredData.slice(0, 15).map((value, key) => {
-                return (
-                    <a className="dataItem" href={`/books/byId/${value.id}`} target="_blank" rel="noreferrer">
-                        <p>{value.title} </p>
-                    </a>
-                );
-            })
             setFilteredData(newFilter);
         }
     };
@@ -152,7 +144,7 @@ function Bookshelf() {
     function TableSearch() {
         return (
             <>
-                <Search>
+                <Search key={id}>
                     <SearchIconWrapper>
                         <SearchIcon />
                     </SearchIconWrapper>
@@ -472,16 +464,18 @@ function Bookshelf() {
                             >
                                 My Books:
                             </Typography>
+
+                            
                             <TableSearch />
                         </Toolbar>
                         <Divider />
                         <Box sx={{ display: 'flex', minHeight: "100vh" }} maxWidth={"100%"}>
                             <List sx={{ pt: 3 }} >
                                 <Typography variant='h6'>Bookshelves</Typography>
-                                {['All', 'Read', 'Reading', 'Want to read'].map((text) => (
+                                {['All', 'Read', 'Reading', 'Want to read'].map((text,index) => (
                                     <ListItem
                                         button
-                                        key={text}
+                                        key={index}
                                         onClick={
                                             () => {
                                                 changeShelf(text)
